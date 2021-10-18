@@ -105,7 +105,7 @@ param vmDnsAdminUsername string
 @secure()
 param vmDnsAdminPassword string
 param addsAndDnsExtensionName string = 'addsanddnsextension'
-param artifactsLocation string = 'https://github.com/MS-ES-DEMO/awvd-consumption-play'
+param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play'
 param domainName string = 'microsoft.com'
 
 
