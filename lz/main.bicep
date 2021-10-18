@@ -106,7 +106,7 @@ param vmDnsAdminUsername string
 param vmDnsAdminPassword string
 param addsAndDnsExtensionName string = 'addsanddnsextension'
 param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play'
-param domainName string = 'microsoft.com'
+param domainName string = 'mydomain.local'
 
 
 

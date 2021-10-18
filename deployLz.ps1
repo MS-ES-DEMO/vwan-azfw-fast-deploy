@@ -52,4 +52,4 @@ $params = "{ \`"vmJumpAdminPassword\`":{\`"value\`": \`"${vmJumpAdminPassword}\`
 # The deployment is applied at the subscription scope
 # TODO: Ensure the parameters.json file us up to date
 # TODO: For production deployments, update the deployment parameter file in the command below.
-az deployment sub create -l westeurope -n $deploymentName --template-file '.\lz\main.bicep' --parameters '.\lz\parameters.json' --parameters $params
+az deployment sub create -l westeurope -n $deploymentName --template-file '.\lz\main.bicep' --parameters '.\parameters.json' --parameters $params
