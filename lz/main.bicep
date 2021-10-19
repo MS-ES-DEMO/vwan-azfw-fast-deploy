@@ -531,9 +531,6 @@ module dnsResources 'dns/dnsResources.bicep' = {
     vmSize: vmDnsSize
     vmAdminUsername: vmDnsAdminUsername
     vmAdminPassword: vmDnsAdminPassword
-    addsAndDnsExtensionName: addsAndDnsExtensionName
-    artifactsLocation: artifactsLocation
-    domainName: domainName
   }
 }
 
@@ -643,6 +640,26 @@ module hubResources 'hub/hubResources.bicep' = {
     firewallName:firewallName
     destinationAddresses: privateTrafficPrefix
     hubVnetConnectionsInfo: hubVnetConnectionsInfo
+  }
+}
+
+module extensionsResources 'extensions/extensionsResources.bicep' = {
+  scope: dnsResourceGroup
+  name: 'extensionsResources_Deploy'
+  dependsOn: [
+    dnsResourceGroup
+    monitoringResources
+    hubResources
+  ]
+  params: {
+    location:location
+    tags: tags
+    vmName: vmDnsName
+    vmAdminUsername: vmDnsAdminUsername
+    vmAdminPassword: vmDnsAdminPassword
+    addsAndDnsExtensionName: addsAndDnsExtensionName
+    artifactsLocation: artifactsLocation
+    domainName: domainName
   }
 }
 
