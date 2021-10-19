@@ -354,6 +354,25 @@ param networkRulesInfo object = {
           destinationFqdns: []
           sourceIpGroups: []
         }
+        {
+          ruleType: 'NetworkRule'
+          sourceAddresses: [
+            '*'
+          ]
+          destinationAddresses: [
+            '*'
+          ]
+          destinationPorts: [
+            '*'
+          ]
+          ipProtocols: [
+            '*'
+          ]
+          name: 'All-Allowed'
+          destinationIpGroups: []
+          destinationFqdns: []
+          sourceIpGroups: []
+        }
       ]
     }
   ]
