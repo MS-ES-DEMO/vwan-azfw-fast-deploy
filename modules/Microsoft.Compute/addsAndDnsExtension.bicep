@@ -22,7 +22,6 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2021-04-01' = {
     publisher: 'Microsoft.Powershell'
     type: 'DSC'
     typeHandlerVersion: '2.19'
-    enableAutomaticUpgrade: true
     autoUpgradeMinorVersion: true
     settings: {
       ModulesUrl: uri(artifactsLocation, 'createADPDC.zip')
