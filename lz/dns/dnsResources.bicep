@@ -123,6 +123,7 @@ module addsAndDnsExtensionResources '../../modules/Microsoft.Compute/addsAndDnsE
   name: 'addsAndDnsExtensionResources_Deploy'
   dependsOn: [
     nicResources
+    vmResources
   ]
   params: {
     tags: tags

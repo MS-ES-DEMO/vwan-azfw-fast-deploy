@@ -408,7 +408,7 @@ param azureFilesAwvdSnetInfo array = [
 @description('Name and range for new awvd subnet')
 param newAwvdSnetInfo array = [
   {
-  name: 'snet-${toLower(env)}-hostpool1'
+  name: 'snet-${toLower(env)}-hp-data-pers'
   range: '10.0.4.32/27'
   }
 ]
