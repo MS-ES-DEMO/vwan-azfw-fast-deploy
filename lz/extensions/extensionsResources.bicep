@@ -10,7 +10,7 @@ param vmAdminUsername string
 @secure()
 param vmAdminPassword string
 param addsAndDnsExtensionName string
-param artifactsLocation string
+param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
 param domainName string
 
 

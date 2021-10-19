@@ -105,7 +105,8 @@ param vmDnsAdminUsername string
 @secure()
 param vmDnsAdminPassword string
 param addsAndDnsExtensionName string = 'addsanddnsextension'
-param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play'
+param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
+//param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play/'
 param domainName string = 'mydomain.local'
 
 
@@ -350,25 +351,6 @@ param networkRulesInfo object = {
             'TCP'
           ]
           name: 'Windows-Software-Activation'
-          destinationIpGroups: []
-          destinationFqdns: []
-          sourceIpGroups: []
-        }
-        {
-          ruleType: 'NetworkRule'
-          sourceAddresses: [
-            '*'
-          ]
-          destinationAddresses: [
-            '*'
-          ]
-          destinationPorts: [
-            '*'
-          ]
-          ipProtocols: [
-            '*'
-          ]
-          name: 'All-Allowed'
           destinationIpGroups: []
           destinationFqdns: []
           sourceIpGroups: []
