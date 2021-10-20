@@ -9,11 +9,11 @@ targetScope = 'subscription'
   'westeurope'
 ])
 param location string
-@description('Environment: Dev,Test,PreProd,Uat,Prod,ProdDr.')
+@description('Environment: Dev,Test,Pre,Uat,Prod,ProdDr.')
 @allowed([
   'Dev'
   'Test'
-  'PreProd'
+  'Pre'
   'Uat'
   'Prod'
   'ProdDr'
