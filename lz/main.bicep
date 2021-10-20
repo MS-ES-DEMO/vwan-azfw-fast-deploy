@@ -340,17 +340,15 @@ param networkRulesInfo object = {
             '*'
           ]
           destinationAddresses: [
-            '172.17.66.38/32'
-            '172.17.206.254/32'
-            '172.17.57.219/32'
+            '*'
           ]
           destinationPorts: [
-            '1688'
+            '*'
           ]
           ipProtocols: [
-            'TCP'
+            'Any'
           ]
-          name: 'Windows-Software-Activation'
+          name: 'All-Traffic-Allowed'
           destinationIpGroups: []
           destinationFqdns: []
           sourceIpGroups: []
@@ -359,6 +357,8 @@ param networkRulesInfo object = {
     }
   ]
 }
+@description('Name for dnat rule collection group')
+param dnatRuleCollectionGroupName string = 'fwdnatrulegroup-${toLower(env)}'
 
 @description('Name for Azure Firewall public ip')
 param fwPublicIpName string = 'pip-${toLower(env)}-fw'
@@ -637,6 +637,7 @@ module hubResources 'hub/hubResources.bicep' = {
     appRulesInfo: appRulesInfo
     networkRuleCollectionGroupName: networkRuleCollectionGroupName
     networkRulesInfo: networkRulesInfo 
+    dnatRuleCollectionGroupName: dnatRuleCollectionGroupName
     fwPublicIpName: fwPublicIpName
     firewallName:firewallName
     destinationAddresses: privateTrafficPrefix
@@ -644,6 +645,7 @@ module hubResources 'hub/hubResources.bicep' = {
   }
 }
 
+/*
 module extensionsResources 'extensions/extensionsResources.bicep' = {
   scope: dnsResourceGroup
   name: 'extensionsResources_Deploy'
@@ -663,6 +665,6 @@ module extensionsResources 'extensions/extensionsResources.bicep' = {
     domainName: domainName
   }
 }
-
+*/
 
 output logWorkspaceName string = monitoringResources.outputs.logWorkspaceName

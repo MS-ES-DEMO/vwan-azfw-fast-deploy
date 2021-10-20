@@ -15,10 +15,47 @@ param appRuleCollectionGroupName string
 param appRulesInfo object 
 param networkRuleCollectionGroupName string
 param networkRulesInfo object 
+param dnatRuleCollectionGroupName string
 param fwPublicIpName string
 param firewallName string
 param destinationAddresses array
 param hubVnetConnectionsInfo array
+
+
+var dnatRulesInfo = {
+  priority: 100
+  ruleCollections: [
+    {
+      ruleCollectionType: 'FirewallPolicyNatRuleCollection'
+      name: 'RemoteAccessRuleCollection'
+      action: {
+        type: 'Dnat'
+      }
+      priority: 110
+      rules: [
+        {
+          ruleType: 'NatRule'
+          name: 'dns-rdp-access'
+          translatedAddress: '10.0.1.4'
+          translatedPort: 3389
+          ipProtocols: [
+              'TCP'
+          ]
+          sourceAddresses: [
+              '*'
+          ]
+          sourceIpGroups: []
+          destinationAddresses: [
+              firewallResources.outputs.fwPublicIp.address
+          ]
+          destinationPorts: [
+              3389
+          ]
+      }
+      ]
+    }
+  ]
+}
 
 
 module vwanResources '../../modules/Microsoft.Network/vwan.bicep' = {
@@ -113,6 +150,19 @@ module firewallResources '../../modules/Microsoft.Network/firewall.bicep' = {
     hubName: hubInfo.name
     fwPublicIpName: fwPublicIpName
     logWorkspaceName: logWorkspaceName
+  }
+}
+
+module fwDnatRulesResources '../../modules/Microsoft.Network/fwRules.bicep' = {
+  name: 'fwDnatRulesResources_Deploy'
+  scope: resourceGroup(securityResourceGroupName)
+  dependsOn: [
+    firewallResources
+  ]
+  params: {
+    fwPolicyName: fwPolicyInfo.name
+    ruleCollectionGroupName: dnatRuleCollectionGroupName
+    rulesInfo: dnatRulesInfo
   }
 }
 

@@ -107,3 +107,4 @@ resource firewallDiagnostics 'Microsoft.Insights/diagnosticsettings@2017-05-01-p
   }
 }
 
+output fwPublicIp object = firewall.properties.hubIPAddresses.publicIPs.addresses[0]
