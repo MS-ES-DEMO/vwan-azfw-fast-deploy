@@ -9,18 +9,18 @@ param vmName string
 param vmAdminUsername string
 @secure()
 param vmAdminPassword string
-param addsAndDnsExtensionName string
+param addsDnsExtensionName string
 param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
 param domainName string
 
 
 
-module addsAndDnsExtensionResources '../../modules/Microsoft.Compute/addsAndDnsExtension.bicep' = {
-  name: 'addsAndDnsExtensionResources_Deploy'
+module addsDnsExtensionResources '../../modules/Microsoft.Compute/addsDnsExtension.bicep' = {
+  name: 'addsDnsExtensionResources_Deploy'
   params: {
     location: location
     tags: tags
-    name: addsAndDnsExtensionName
+    name: addsDnsExtensionName
     vmName: vmName
     artifactsLocation: artifactsLocation
     domainName: domainName

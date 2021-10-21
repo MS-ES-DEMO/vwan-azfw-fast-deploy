@@ -25,7 +25,7 @@ param monitoringResourceGroupName string
 @description('Name for hub RG')
 param hubResourceGroupName string
 @description('Name for DNS RG')
-param dnsResourceGroupName string
+param addsDnsResourceGroupName string
 @description('Name for shared services RG')
 param sharedResourceGroupName string
 @description('Name for spoke1 RG')
@@ -46,23 +46,23 @@ param existingLogWorkspaceName string = ''
 // securityResources
 
 
-// dnsResources
+// addsdnsResources
 
-@description('Name and range for DNS vNet')
+@description('Name and range for ADDSDNS vNet')
 param dnsVnetInfo object = {
-    name: 'vnet-${toLower(env)}-dns'
+    name: 'vnet-addsdns'
     range: '10.0.1.0/24'
 }
-@description('Name and range for DNS subnets')
+@description('Name and range for ADDSDNS subnets')
 param dnsSnetsInfo array = [
   {
-  name: 'snet-${toLower(env)}-dns'
+  name: 'snet-addsdns'
   range: '10.0.1.0/26'
   }
 ]
-@description('Name and rules for DNS nsg')
+@description('Name and rules for ADDSDNS nsg')
 param dnsNicNsgInfo object = {
-  name: 'nsg-${toLower(env)}-nic-dns'
+  name: 'nsg-nic-addsdns'
   inboundRules: [
     {
       name: 'rule1'
@@ -92,19 +92,19 @@ param dnsNicNsgInfo object = {
     }
   ]
 }
-@description('Name for DNS nic')
-param dnsNicName string = 'nic-${toLower(env)}-dns'
-@description('Name for DNS vm')
-param vmDnsName string = 'vm-${toLower(env)}-dns'
-@description('Size for DNS vm')
-param vmDnsSize string = 'Standard_DS3_V2'
-@description('Admin username for DNS vm')
+@description('Name for ADDSDNS nic')
+param addsDnsNicName string = 'nic-addsdns'
+@description('Name for ADDSDNS vm')
+param vmAddsDnsName string = 'vm-addsdns'
+@description('Size for ADDSDNS vm')
+param vmAddsDnsSize string = 'Standard_DS3_V2'
+@description('Admin username for ADDSDNS vm')
 @secure()
-param vmDnsAdminUsername string
-@description('Admin password for DNS vm')
+param vmAddsDnsAdminUsername string
+@description('Admin password for ADDSDNS vm')
 @secure()
-param vmDnsAdminPassword string
-param addsAndDnsExtensionName string = 'addsanddnsextension'
+param vmAddsDnsAdminPassword string
+param addsDnsExtensionName string = 'addsdnsextension'
 param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
 //param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play/'
 param domainName string = 'mydomain.local'
@@ -115,19 +115,19 @@ param domainName string = 'mydomain.local'
 
 @description('Name and range for shared services vNet')
 param sharedVnetInfo object = {
-    name: 'vnet-${toLower(env)}-shared'
+    name: 'vnet-shared'
     range: '10.0.2.0/24'
 }
 @description('Name and range for shared subnets')
 param sharedSnetsInfo array = [
   {
-  name: 'snet-${toLower(env)}-jump'
+  name: 'snet-jump'
   range: '10.0.2.0/26'
   }
 ]
 @description('Nsg info for Jump Nic')
 param jumpNicNsgInfo object = {
-  name: 'nsg-${toLower(env)}-nic-jump'
+  name: 'nsg-nic-jump'
   inboundRules: [
     {
       name: 'rule1'
@@ -158,11 +158,11 @@ param jumpNicNsgInfo object = {
   ]
 }
 @description('Name for Jump Nic')
-param jumpNicName string = 'nic-${toLower(env)}-jump'
+param jumpNicName string = 'nic-jump'
 @description('Deploy Custom DNS on Shared Services vnet?')
 param deployCustomDnsOnSharedVnet bool = true
 @description('Name for Jump vm')
-param vmJumpName string = 'vm-${toLower(env)}-jump'
+param vmJumpName string = 'vm-jump'
 @description('Size for Jump vm')
 param vmJumpSize string = 'Standard_DS3_V2'
 @description('Admin username for Jump vm')
@@ -176,23 +176,23 @@ param vmJumpAdminPassword string
 
 @description('Name and range for spoke1 services vNet')
 param spoke1VnetInfo object = {
-    name: 'vnet-${toLower(env)}-spoke1'
+    name: 'vnet-spoke1'
     range: '10.0.3.0/24'
 }
 @description('Name and range for spoke1 subnets')
 param spoke1SnetsInfo array = [
   {
-  name: 'snet-${toLower(env)}-app'
+  name: 'snet-app'
   range: '10.0.3.0/26'
   }
   {
-  name: 'snet-${toLower(env)}-plinks'
+  name: 'snet-plinks'
   range: '10.0.3.64/26'
   }
 ]
 @description('Nsg info for spoke1 Nic')
 param spoke1NicNsgInfo object = {
-  name: 'nsg-${toLower(env)}-nic-spoke1'
+  name: 'nsg-nic-spoke1'
   inboundRules: [
     {
       name: 'rule1'
@@ -223,11 +223,11 @@ param spoke1NicNsgInfo object = {
   ]
 }
 @description('Name for Spoke1 Nic')
-param spoke1NicName string = 'nic-${toLower(env)}-spoke1'
+param spoke1NicName string = 'nic-spoke1'
 @description('Deploy Custom DNS on spoke1 vnet?')
 param deployCustomDnsOnSpoke1Vnet bool = true
 @description('Name for spoke1 vm')
-param vmSpoke1Name string = 'vm-${toLower(env)}-spo1'
+param vmSpoke1Name string = 'vm-spoke1'
 @description('Size for Spoke1 vm')
 param vmSpoke1Size string = 'Standard_DS3_V2'
 @description('Admin username for Spoke1 vm')
@@ -244,15 +244,15 @@ param vmSpoke1AdminPassword string
 
 
 @description('Name for VWAN')
-param vwanName string = 'vwan-${toLower(env)}-001'
+param vwanName string = 'vwan-001'
 @description('Name and range for Hub')
 param hubInfo object = {
-    name: 'hub-${toLower(env)}-001'
+    name: 'hub-001'
     range: '10.0.0.0/24'
 }
 @description('Name and snat ranges for fw policy')
 param fwPolicyInfo object = {
-  name: 'fwpolicy-${toLower(env)}-001'
+  name: 'fwpolicy-001'
   snatRanges: [
     '129.35.65.13'
     '82.132.128.0/17'
@@ -281,7 +281,7 @@ param fwPolicyInfo object = {
   ]
 }
 @description('Name for application rule collection group')
-param appRuleCollectionGroupName string = 'fwapprulegroup-${toLower(env)}'
+param appRuleCollectionGroupName string = 'fwapprulegroup'
 @description('Rule Collection Info')
 param appRulesInfo object = {
   priority: 300
@@ -321,7 +321,7 @@ param appRulesInfo object = {
   ]
 }
 @description('Name for application rule collection group')
-param networkRuleCollectionGroupName string = 'fwnetrulegroup-${toLower(env)}'
+param networkRuleCollectionGroupName string = 'fwnetrulegroup'
 @description('Rule Collection Info')
 param networkRulesInfo object = {
   priority: 200
@@ -358,58 +358,58 @@ param networkRulesInfo object = {
   ]
 }
 @description('Name for dnat rule collection group')
-param dnatRuleCollectionGroupName string = 'fwdnatrulegroup-${toLower(env)}'
+param dnatRuleCollectionGroupName string = 'fwdnatrulegroup'
 
 @description('Name for Azure Firewall public ip')
-param fwPublicIpName string = 'pip-${toLower(env)}-fw'
+param fwPublicIpName string = 'pip-fw'
 @description('Name for Azure Firewall')
-param firewallName string = 'azfw-${toLower(env)}'
+param firewallName string = 'azfw'
 @description('Name for hub virtual connections')
 param hubVnetConnectionsInfo array = [
   {
-    name: 'hub-to-dns'
-    remoteVnetName: 'vnet-${toLower(env)}-dns'
-    resourceGroup: dnsResourceGroupName
+    name: 'hub-to-addsdns'
+    remoteVnetName: 'vnet-addsdns'
+    resourceGroup: addsDnsResourceGroupName
   }
   {
     name: 'hub-to-shared'
-    remoteVnetName: 'vnet-${toLower(env)}-shared'
+    remoteVnetName: 'vnet-shared'
     resourceGroup: sharedResourceGroupName
   }
   {
     name: 'hub-to-awvd'
-    remoteVnetName: 'vnet-${toLower(env)}-awvd'
+    remoteVnetName: 'vnet-awvd'
     resourceGroup: awvdResourceGroupName
   }
   {
     name: 'hub-to-spoke1'
-    remoteVnetName: 'vnet-${toLower(env)}-spoke1'
+    remoteVnetName: 'vnet-spoke1'
     resourceGroup: spoke1ResourceGroupName
   }
 ]
 @description('Name for storage account')
 param storageAccountName string = 'blob${toLower(env)}spoke1'
 @description('Name for blob storage private endpoint')
-param blobStorageAccountPrivateEndpointName string = 'plink-blob-${toLower(env)}-spoke1'
+param blobStorageAccountPrivateEndpointName string = 'plink-blob-spoke1'
 
 // awvdResources
 
 @description('Name and range for awvd vNet')
 param awvdVnetInfo object = {
-    name: 'vnet-${toLower(env)}-awvd'
+    name: 'vnet-awvd'
     range: '10.0.4.0/23'
 }
 @description('Name and range for Azure Files subnet')
 param azureFilesAwvdSnetInfo array = [
   {
-  name: 'snet-${toLower(env)}-azurefiles'
+  name: 'snet-azurefiles'
   range: '10.0.4.0/27'
   }
 ]
 @description('Name and range for new awvd subnet')
 param newAwvdSnetInfo array = [
   {
-  name: 'snet-${toLower(env)}-hp-data-pers'
+  name: 'snet-hp-data-pers'
   range: '10.0.4.32/27'
   }
 ]
@@ -418,7 +418,7 @@ param existingAwvdSnetsInfo array = []
 
 
 param fslogixStorageAccountName string = 'fslogix${toLower(env)}profiles'
-param fslogixFileStorageAccountPrivateEndpointName string = 'plink-fslogix-${toLower(env)}-profiles'
+param fslogixFileStorageAccountPrivateEndpointName string = 'plink-fslogix-profiles'
 
 
 
@@ -429,17 +429,17 @@ var privateDnsZonesInfo = [
   {
     name: format('privatelink.blob.{0}', environment().suffixes.storage)
     vnetLinkName: 'vnet-link-blob-to-'
-    vnetName: 'vnet-${toLower(env)}-dns'
+    vnetName: 'vnet-addsdns'
   }
   {
     name: format('privatelink.file.{0}', environment().suffixes.storage)
     vnetLinkName: 'vnet-link-file-to-'
-    vnetName: 'vnet-${toLower(env)}-dns'
+    vnetName: 'vnet-addsdns'
   }
   {
     name: format('privatelink{0}', environment().suffixes.sqlServerHostname)
     vnetLinkName: 'vnet-link-sqldatabase-to-'
-    vnetName: 'vnet-${toLower(env)}-dns'
+    vnetName: 'vnet-addsdns'
   }
 ]
 
@@ -471,7 +471,7 @@ resource securityResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' =
 }
 
 resource dnsResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: dnsResourceGroupName
+  name: addsDnsResourceGroupName
   location: location
 }
 
@@ -511,7 +511,7 @@ module monitoringResources 'monitoring/monitoringResources.bicep' = {
   }
 }
 
-module dnsResources 'dns/dnsResources.bicep' = {
+module addsDnsResources 'addsdns/addsDnsResources.bicep' = {
   scope: dnsResourceGroup
   name: 'dnsResources_Deploy'
   dependsOn: [
@@ -525,13 +525,13 @@ module dnsResources 'dns/dnsResources.bicep' = {
     nsgInfo: dnsNicNsgInfo
     snetsInfo: dnsSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo    
-    nicName: dnsNicName
+    nicName: addsDnsNicName
     deployCustomDns: false
-    dnsResourceGroupName: dnsResourceGroupName
-    vmName: vmDnsName
-    vmSize: vmDnsSize
-    vmAdminUsername: vmDnsAdminUsername
-    vmAdminPassword: vmDnsAdminPassword
+    addsDnsResourceGroupName: addsDnsResourceGroupName
+    vmName: vmAddsDnsName
+    vmSize: vmAddsDnsSize
+    vmAdminUsername: vmAddsDnsAdminUsername
+    vmAdminPassword: vmAddsDnsAdminPassword
   }
 }
 
@@ -540,7 +540,7 @@ module sharedResources 'shared/sharedResources.bicep' = {
   name: 'sharedResources_Deploy'
   dependsOn: [
     sharedResourceGroup
-    dnsResources
+    addsDnsResources
   ]
   params: {
     location:location
@@ -551,8 +551,8 @@ module sharedResources 'shared/sharedResources.bicep' = {
     privateDnsZonesInfo: privateDnsZonesInfo 
     nicName: jumpNicName
     deployCustomDns: deployCustomDnsOnSharedVnet
-    dnsNicName: dnsNicName
-    dnsResourceGroupName: dnsResourceGroupName
+    addsDnsNicName: addsDnsNicName
+    addsDnsResourceGroupName: addsDnsResourceGroupName
     vmName: vmJumpName
     vmSize: vmJumpSize
     vmAdminUsername: vmJumpAdminUsername
@@ -566,7 +566,7 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
   dependsOn: [
     spoke1ResourceGroup
     sharedResources
-    dnsResources
+    addsDnsResources
   ]
   params: {
     location:location
@@ -577,8 +577,8 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
     privateDnsZonesInfo: privateDnsZonesInfo 
     nicName: spoke1NicName
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
-    dnsNicName: dnsNicName
-    dnsResourceGroupName: dnsResourceGroupName
+    addsDnsNicName: addsDnsNicName
+    addsDnsResourceGroupName: addsDnsResourceGroupName
     vmName: vmSpoke1Name
     vmSize: vmSpoke1Size
     vmAdminUsername: vmSpoke1AdminUsername
@@ -594,7 +594,7 @@ module awvdResources 'awvd/awvdResources.bicep' = {
   name: 'awvdResources_Deploy'
   dependsOn: [
     awvdResourceGroup
-    dnsResources
+    addsDnsResources
     sharedResources
     spoke1Resources
   ]
@@ -605,8 +605,8 @@ module awvdResources 'awvd/awvdResources.bicep' = {
     snetsInfo: awvdSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo 
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
-    dnsNicName: dnsNicName
-    dnsResourceGroupName: dnsResourceGroupName
+    addsDnsNicName: addsDnsNicName
+    addsDnsResourceGroupName: addsDnsResourceGroupName
     storageAccountName: fslogixStorageAccountName
     filePrivateDnsZoneName: privateDnsZonesInfo[1].name
     fileStorageAccountPrivateEndpointName: fslogixFileStorageAccountPrivateEndpointName
@@ -619,7 +619,7 @@ module hubResources 'hub/hubResources.bicep' = {
   dependsOn: [
     securityResourceGroup
     hubResourceGroup
-    dnsResources
+    addsDnsResources
     sharedResources
     awvdResources
   ]

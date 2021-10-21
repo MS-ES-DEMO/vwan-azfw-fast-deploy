@@ -8,8 +8,8 @@ param vnetInfo object
 param snetsInfo array
 param privateDnsZonesInfo array
 param deployCustomDns bool = true
-param dnsNicName string
-param dnsResourceGroupName string
+param addsDnsNicName string
+param addsDnsResourceGroupName string
 param storageAccountName string
 param fileStorageAccountPrivateEndpointName string
 param filePrivateDnsZoneName string
@@ -23,15 +23,15 @@ module vnetResources '../../modules/Microsoft.Network/vnet.bicep' = {
     tags: tags
     vnetInfo: vnetInfo
     deployCustomDns: deployCustomDns
-    dnsNicName: dnsNicName
-    dnsResourceGroupName: dnsResourceGroupName
+    addsDnsNicName: addsDnsNicName
+    addsDnsResourceGroupName: addsDnsResourceGroupName
     snetsInfo: snetsInfo
   }
 }
 
 module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
   name: 'awvdVnetLinksResources_Deploy${i}'
-  scope: resourceGroup(dnsResourceGroupName)
+  scope: resourceGroup(addsDnsResourceGroupName)
   dependsOn: [
     vnetResources
   ]
@@ -68,7 +68,7 @@ module filePrivateEndpointResources '../../modules/Microsoft.Network/storagePriv
     storageAccountName: storageAccountName
     privateDnsZoneName: filePrivateDnsZoneName
     groupIds: 'file'
-    dnsResourceGroupName: dnsResourceGroupName
+    addsDnsResourceGroupName: addsDnsResourceGroupName
   }
 }
 

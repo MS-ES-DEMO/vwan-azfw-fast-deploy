@@ -6,12 +6,12 @@ randomPassword
 
 
 $vmJumpAdminPassword = randomPassword
-$vmDnsAdminPassword = randomPassword
+$vmAddsDnsAdminPassword = randomPassword
 $vmSpoke1AdminPassword = randomPassword
 
 $deploymentName="Lz-Deployment-$(New-Guid)"
 
-$params = "{ \`"vmJumpAdminPassword\`":{\`"value\`": \`"${vmJumpAdminPassword}\`" }, \`"vmDnsAdminPassword\`":{\`"value\`": \`"${vmDnsAdminPassword}\`" }, \`"vmSpoke1AdminPassword\`":{\`"value\`": \`"${vmSpoke1AdminPassword}\`" }}"
+$params = "{ \`"vmJumpAdminPassword\`":{\`"value\`": \`"${vmJumpAdminPassword}\`" }, \`"vmAddsDnsAdminPassword\`":{\`"value\`": \`"${vmAddsDnsAdminPassword}\`" }, \`"vmSpoke1AdminPassword\`":{\`"value\`": \`"${vmSpoke1AdminPassword}\`" }}"
 
 # The deployment is applied at the subscription scope
 # TODO: Ensure the parameters.json file us up to date

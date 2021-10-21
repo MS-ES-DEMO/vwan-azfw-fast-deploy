@@ -10,7 +10,7 @@ param snetsInfo array
 param privateDnsZonesInfo array
 param nicName string
 param deployCustomDns bool = false
-param dnsResourceGroupName string
+param addsDnsResourceGroupName string
 param vmName string
 param vmSize string
 @secure()
@@ -31,8 +31,8 @@ module vnetResources '../../modules/Microsoft.Network/vnet.bicep' = {
     tags: tags
     vnetInfo: vnetInfo
     deployCustomDns: deployCustomDns
-    dnsNicName: ''
-    dnsResourceGroupName: dnsResourceGroupName
+    addsDnsNicName: ''
+    addsDnsResourceGroupName: addsDnsResourceGroupName
     snetsInfo: snetsInfo
   }
 }
