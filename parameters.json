@@ -13,6 +13,7 @@
         "awvdResourceGroupName":{"value": "rg-pre-awvd"},
         "deployLogWorkspace":{"value": true},
         "existingLogWorkspaceName":{"value": ""},
+        "diagnosticsStorageAccountName":{"value": "sadiagnosticdata"},
         "vmAddsDnsAdminUsername":{"value": "addsdnsadmin"},
         "vmJumpAdminUsername":{"value": "jumpadmin"},
         "vmSpoke1AdminUsername":{"value": "spoke1admin"}

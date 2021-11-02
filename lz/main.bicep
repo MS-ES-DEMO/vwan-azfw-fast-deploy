@@ -41,6 +41,8 @@ param awvdResourceGroupName string
 param deployLogWorkspace bool
 @description('Name for existing Log Analytics Workspace')
 param existingLogWorkspaceName string = ''
+@description('Name for diagnostic storage account')
+param diagnosticsStorageAccountName string
 
 
 // securityResources
@@ -104,10 +106,10 @@ param vmAddsDnsAdminUsername string
 @description('Admin password for ADDSDNS vm')
 @secure()
 param vmAddsDnsAdminPassword string
-param addsDnsExtensionName string = 'addsdnsextension'
-param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
+//param addsDnsExtensionName string = 'addsdnsextension'
+//param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
 //param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play/'
-param domainName string = 'mydomain.local'
+//param domainName string = 'mydomain.local'
 
 
 
@@ -508,6 +510,7 @@ module monitoringResources 'monitoring/monitoringResources.bicep' = {
     tags: tags
     deployLogWorkspace: deployLogWorkspace
     existingLogWorkspaceName: existingLogWorkspaceName
+    diagnosticsStorageAccountName: diagnosticsStorageAccountName
   }
 }
 
