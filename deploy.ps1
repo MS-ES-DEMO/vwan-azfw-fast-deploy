@@ -2,7 +2,6 @@
 # password for the VMs to be changed.
 
 Import-Module Tools
-randomPassword
 
 
 $vmJumpAdminPassword = randomPassword
