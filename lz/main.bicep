@@ -535,6 +535,9 @@ module addsDnsResources 'addsdns/addsDnsResources.bicep' = {
     vmSize: vmAddsDnsSize
     vmAdminUsername: vmAddsDnsAdminUsername
     vmAdminPassword: vmAddsDnsAdminPassword
+    diagnosticsStorageAccountName: diagnosticsStorageAccountName
+    logWorkspaceName: monitoringResources.outputs.logWorkspaceName
+    monitoringResourceGroupName: monitoringResourceGroupName
   }
 }
 
@@ -560,6 +563,9 @@ module sharedResources 'shared/sharedResources.bicep' = {
     vmSize: vmJumpSize
     vmAdminUsername: vmJumpAdminUsername
     vmAdminPassword: vmJumpAdminPassword
+    diagnosticsStorageAccountName: diagnosticsStorageAccountName
+    logWorkspaceName: monitoringResources.outputs.logWorkspaceName
+    monitoringResourceGroupName: monitoringResourceGroupName
   }
 }
 
@@ -586,6 +592,9 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
     vmSize: vmSpoke1Size
     vmAdminUsername: vmSpoke1AdminUsername
     vmAdminPassword: vmSpoke1AdminPassword
+    diagnosticsStorageAccountName: diagnosticsStorageAccountName
+    logWorkspaceName: monitoringResources.outputs.logWorkspaceName
+    monitoringResourceGroupName: monitoringResourceGroupName
     storageAccountName: storageAccountName
     blobStorageAccountPrivateEndpointName: blobStorageAccountPrivateEndpointName
     blobPrivateDnsZoneName: privateDnsZonesInfo[0].name

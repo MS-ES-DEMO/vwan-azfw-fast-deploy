@@ -8,7 +8,7 @@ param promotionCode string
 param publisher string
 
 
-resource serviceMapSolution 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = {
+resource solution 'Microsoft.OperationsManagement/solutions@2015-11-01-preview' = {
   location: location
   tags: tags
   name: name

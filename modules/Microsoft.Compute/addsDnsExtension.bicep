@@ -14,8 +14,8 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-04-01' existing = {
 }
 
 resource extension 'Microsoft.Compute/virtualMachines/extensions@2021-04-01' = {
-  name: name
   parent: vm
+  name: name
   location: location
   tags: tags
   properties: {

@@ -43,7 +43,7 @@ module serviceMapSolution '../../modules/Microsoft.OperationsManagement/solution
   params: {
     location: location
     tags: tags
-    name: 'ServiceMap-(${deployLogWorkspace ? logWorkspaceName : existingLogWorkspace.name})'
+    name: 'ServiceMap(${deployLogWorkspace ? logWorkspaceName : existingLogWorkspace.name})'
     workspaceResourceId: deployLogWorkspace ? logWorkspaceResources.outputs.workspaceId : existingLogWorkspace.id
     product: 'OMSGallery/ServiceMap'
     promotionCode: ''
@@ -56,7 +56,7 @@ module vmInsightsSolution '../../modules/Microsoft.OperationsManagement/solution
   params: {
     location: location
     tags: tags
-    name: 'VMInsights-(${deployLogWorkspace ? logWorkspaceName : existingLogWorkspace.name})'
+    name: 'VMInsights(${deployLogWorkspace ? logWorkspaceName : existingLogWorkspace.name})'
     workspaceResourceId: deployLogWorkspace ? logWorkspaceResources.outputs.workspaceId : existingLogWorkspace.id
     product: 'OMSGallery/VMInsights'
     promotionCode: ''

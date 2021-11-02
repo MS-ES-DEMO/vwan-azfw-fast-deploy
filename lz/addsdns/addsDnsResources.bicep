@@ -17,6 +17,9 @@ param vmSize string
 param vmAdminUsername string
 @secure()
 param vmAdminPassword string
+param diagnosticsStorageAccountName string
+param logWorkspaceName string
+param monitoringResourceGroupName string
 
 
 
@@ -115,6 +118,51 @@ module vmResources '../../modules/Microsoft.Compute/vm.bicep' = {
     nicName: nicName
   }
 }
+
+module daExtensionResources '../../modules/Microsoft.Compute/daExtension.bicep' = {
+  name: 'daExtensionResources_Deploy'
+  dependsOn: [
+    vmResources
+  ]
+  params: {
+    location: location
+    tags: tags
+    vmName: vmName
+  }
+}
+
+module diagnosticsExtensionResources '../../modules/Microsoft.Compute/diagnosticsExtension.bicep' = {
+  name: 'diagnosticsExtensionResources_Deploy'
+  dependsOn: [
+    vmResources
+    daExtensionResources
+  ]
+  params: {
+    location: location
+    tags: tags
+    vmName: vmName
+    diagnosticsStorageAccountName: diagnosticsStorageAccountName
+    monitoringResourceGroupName: monitoringResourceGroupName
+  }
+}
+
+module monitoringAgentExtensionResources '../../modules/Microsoft.Compute/monitoringAgentExtension.bicep' = {
+  name: 'monitoringAgentExtensionResources_Deploy'
+  dependsOn: [
+    vmResources
+    diagnosticsExtensionResources
+    daExtensionResources
+  ]
+  params: {
+    location: location
+    tags: tags
+    vmName: vmName
+    logWorkspaceName: logWorkspaceName
+    monitoringResourceGroupName: monitoringResourceGroupName
+  }
+}
+
+
 
 
 

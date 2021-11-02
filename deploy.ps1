@@ -3,10 +3,13 @@
 
 Import-Module Tools
 
-
-$vmJumpAdminPassword = randomPassword
-$vmAddsDnsAdminPassword = randomPassword
-$vmSpoke1AdminPassword = randomPassword
+#0..255 | Foreach-Object {"$_ : $([char]$_)"}
+#$vmJumpAdminPassword = randomPassword
+$vmJumpAdminPassword = 'xj48TCd3ErvxzCCqNktELCp4OK2JSqxW9Q'
+#$vmAddsDnsAdminPassword = randomPassword
+$vmAddsDnsAdminPassword = 'G6vOWZ1DrmUZaAP0maOgWJhDMAAkS5z'
+#$vmSpoke1AdminPassword = randomPassword
+$vmSpoke1AdminPassword = 'dILgegRUB/VL/4dR1kGd/CV0ikZXs'
 
 $deploymentName="Lz-Deployment-$(New-Guid)"
 
