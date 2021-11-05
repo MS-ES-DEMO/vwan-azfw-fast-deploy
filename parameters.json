@@ -18,6 +18,7 @@
         "vmJumpAdminUsername":{"value": "jumpadmin"},
         "vmSpoke1AdminUsername":{"value": "spoke1admin"},
         "newAwvdSnetInfo":{"value": [{"name": "snet-hp-data-pool", "range": "10.0.4.64/27"}]},
-        "existingAwvdSnetsInfo":{"value": [{"name": "snet-hp-data-pers", "range": "10.0.4.32/27"}]}
+        "existingAwvdSnetsInfo":{"value": [{"name": "snet-hp-data-pers", "range": "10.0.4.32/27"}]},
+        "fslogixFileShareName":{"value": "fslogixprofiles"}
     }
 }

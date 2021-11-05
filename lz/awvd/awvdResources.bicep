@@ -11,6 +11,7 @@ param deployCustomDns bool = true
 param addsDnsNicName string
 param addsDnsResourceGroupName string
 param storageAccountName string
+param fslogixFileShareName string
 param fileStorageAccountPrivateEndpointName string
 param filePrivateDnsZoneName string
 
@@ -50,6 +51,17 @@ module storageAccountResources '../../modules/Microsoft.Storage/storageAccount.b
     location: location
     tags: tags
     name: storageAccountName
+  }
+}
+
+module fileShareResources '../../modules/Microsoft.Storage/fileShare.bicep' = {
+  name: 'fileShareResources_Deploy'
+  dependsOn: [
+    storageAccountResources
+  ]
+  params: {
+    name: fslogixFileShareName
+    storageAccountName: storageAccountName
   }
 }
 

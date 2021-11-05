@@ -421,6 +421,7 @@ param existingAwvdSnetsInfo array = []
 
 param fslogixStorageAccountName string = 'fslogix${toLower(env)}profiles'
 param fslogixFileStorageAccountPrivateEndpointName string = 'plink-fslogix-profiles'
+param fslogixFileShareName string
 
 
 
@@ -620,6 +621,7 @@ module awvdResources 'awvd/awvdResources.bicep' = {
     addsDnsNicName: addsDnsNicName
     addsDnsResourceGroupName: addsDnsResourceGroupName
     storageAccountName: fslogixStorageAccountName
+    fslogixFileShareName: fslogixFileShareName
     filePrivateDnsZoneName: privateDnsZonesInfo[1].name
     fileStorageAccountPrivateEndpointName: fslogixFileStorageAccountPrivateEndpointName
   }
