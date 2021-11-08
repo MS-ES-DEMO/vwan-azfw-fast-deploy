@@ -67,6 +67,9 @@ module vmInsightsSolution '../../modules/Microsoft.OperationsManagement/solution
 
 module datasources '../../modules/Microsoft.OperationalInsights/datasources.bicep' = {
   name: 'datasources_Deploy'
+  dependsOn: [
+    logWorkspaceResources
+  ]
   params: {
     tags: tags
     logWorkspaceName: deployLogWorkspace ? logWorkspaceName : existingLogWorkspaceName
