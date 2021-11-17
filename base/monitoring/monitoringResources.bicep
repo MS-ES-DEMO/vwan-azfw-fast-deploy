@@ -11,7 +11,7 @@ param deployLogWorkspace bool
 param existingLogWorkspaceName string
 param diagnosticsStorageAccountName string
 
-var logWorkspaceName = 'workspace-${toLower(env)}-lz'
+var logWorkspaceName = 'workspace-${toLower(env)}-base'
 
 module logWorkspaceResources '../../modules/Microsoft.OperationalInsights/logWorkspace.bicep' = if (deployLogWorkspace) {
   //scope: resourceGroup(monitoringResourceGroupName)
