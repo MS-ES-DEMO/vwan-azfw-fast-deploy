@@ -32,8 +32,8 @@ param sharedResourceGroupName string
 param spoke1ResourceGroupName string
 @description('Name for security RG')
 param securityResourceGroupName string
-@description('Name for AWVD RG')
-param awvdResourceGroupName string
+@description('Name for AVD RG')
+param avdResourceGroupName string
 
 
 // monitoringResources
@@ -107,7 +107,7 @@ param vmAddsDnsAdminUsername string
 @secure()
 param vmAddsDnsAdminPassword string
 //param addsDnsExtensionName string = 'addsdnsextension'
-//param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
+//param artifactsLocation string = 'https://extensionsavd.blob.core.windows.net/extensions/'
 //param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play/'
 //param domainName string = 'mydomain.local'
 
@@ -379,9 +379,9 @@ param hubVnetConnectionsInfo array = [
     resourceGroup: sharedResourceGroupName
   }
   {
-    name: 'hub-to-awvd'
-    remoteVnetName: 'vnet-awvd'
-    resourceGroup: awvdResourceGroupName
+    name: 'hub-to-avd'
+    remoteVnetName: 'vnet-avd'
+    resourceGroup: avdResourceGroupName
   }
   {
     name: 'hub-to-spoke1'
@@ -394,29 +394,29 @@ param storageAccountName string = 'blob${toLower(env)}spoke1'
 @description('Name for blob storage private endpoint')
 param blobStorageAccountPrivateEndpointName string = 'plink-blob-spoke1'
 
-// awvdResources
+// avdResources
 
-@description('Name and range for awvd vNet')
-param awvdVnetInfo object = {
-    name: 'vnet-awvd'
+@description('Name and range for avd vNet')
+param avdVnetInfo object = {
+    name: 'vnet-avd'
     range: '10.0.4.0/23'
 }
 @description('Name and range for Azure Files subnet')
-param azureFilesAwvdSnetInfo array = [
+param azureFilesAvdSnetInfo array = [
   {
   name: 'snet-azurefiles'
   range: '10.0.4.0/27'
   }
 ]
-@description('Name and range for new awvd subnet')
-param newAwvdSnetInfo array = [
+@description('Name and range for new avd subnet')
+param newAvdSnetInfo array = [
   {
   name: 'snet-hp-data-pers'
   range: '10.0.4.32/27'
   }
 ]
-@description('Name and range for existing awvd subnets')
-param existingAwvdSnetsInfo array = []
+@description('Name and range for existing avd subnets')
+param existingAvdSnetsInfo array = []
 
 
 param fslogixStorageAccountName string = 'fslogix${toLower(env)}profiles'
@@ -425,7 +425,7 @@ param fslogixFileShareName string
 
 
 
-var awvdSnetsInfo = union(azureFilesAwvdSnetInfo, newAwvdSnetInfo, existingAwvdSnetsInfo) 
+var avdSnetsInfo = union(azureFilesAvdSnetInfo, newAvdSnetInfo, existingAvdSnetsInfo) 
 
 
 var privateDnsZonesInfo = [
@@ -459,7 +459,7 @@ var privateTrafficPrefix = [
     '${sharedVnetInfo.range}'
     '${dnsVnetInfo.range}'
     '${spoke1VnetInfo.range}'
-    '${awvdVnetInfo.range}'
+    '${avdVnetInfo.range}'
 ]
 
 
@@ -488,8 +488,8 @@ resource spoke1ResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
   location: location
 }
 
-resource awvdResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: awvdResourceGroupName
+resource avdResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+  name: avdResourceGroupName
   location: location
 }
 
@@ -602,11 +602,11 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
   }
 }
 
-module awvdResources 'awvd/awvdResources.bicep' = {
-  scope: awvdResourceGroup
-  name: 'awvdResources_Deploy'
+module avdResources 'avd/avdResources.bicep' = {
+  scope: avdResourceGroup
+  name: 'avdResources_Deploy'
   dependsOn: [
-    awvdResourceGroup
+    avdResourceGroup
     addsDnsResources
     sharedResources
     spoke1Resources
@@ -614,8 +614,8 @@ module awvdResources 'awvd/awvdResources.bicep' = {
   params: {
     location:location
     tags: tags
-    vnetInfo: awvdVnetInfo 
-    snetsInfo: awvdSnetsInfo
+    vnetInfo: avdVnetInfo 
+    snetsInfo: avdSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo 
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
     addsDnsNicName: addsDnsNicName
@@ -635,7 +635,7 @@ module hubResources 'hub/hubResources.bicep' = {
     hubResourceGroup
     addsDnsResources
     sharedResources
-    awvdResources
+    avdResources
   ]
   params: {
     location:location

@@ -11,7 +11,7 @@ $vmAddsDnsAdminPassword = 'G6vOWZ1DrmUZaAP0maOgWJhDMAAkS5z'
 #$vmSpoke1AdminPassword = randomPassword
 $vmSpoke1AdminPassword = 'dILgegRUB/VL/4dR1kGd/CV0ikZXs'
 
-$deploymentName="Lz-Deployment-$(New-Guid)"
+$deploymentName="Base-Deployment-$(New-Guid)"
 
 $params = "{ \`"vmJumpAdminPassword\`":{\`"value\`": \`"${vmJumpAdminPassword}\`" }, \`"vmAddsDnsAdminPassword\`":{\`"value\`": \`"${vmAddsDnsAdminPassword}\`" }, \`"vmSpoke1AdminPassword\`":{\`"value\`": \`"${vmSpoke1AdminPassword}\`" }}"
 

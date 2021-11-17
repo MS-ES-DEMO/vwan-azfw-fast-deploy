@@ -31,14 +31,14 @@ module vnetResources '../../modules/Microsoft.Network/vnet.bicep' = {
 }
 
 module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
-  name: 'awvdVnetLinksResources_Deploy${i}'
+  name: 'avdVnetLinksResources_Deploy${i}'
   scope: resourceGroup(addsDnsResourceGroupName)
   dependsOn: [
     vnetResources
   ]
   params: {
     tags: tags
-    name: '${privateDnsZoneInfo.vnetLinkName}awvd'
+    name: '${privateDnsZoneInfo.vnetLinkName}avd'
     vnetName: vnetInfo.name
     privateDnsZoneName: privateDnsZoneInfo.name
     vnetResourceGroupName: resourceGroup().name

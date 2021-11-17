@@ -10,15 +10,15 @@
         "sharedResourceGroupName":{"value": "rg-pre-shared"},
         "spoke1ResourceGroupName":{"value": "rg-pre-spoke1"},
         "securityResourceGroupName":{"value": "rg-pre-security"},
-        "awvdResourceGroupName":{"value": "rg-pre-awvd"},
+        "avdResourceGroupName":{"value": "rg-pre-avd"},
         "deployLogWorkspace":{"value": true},
         "existingLogWorkspaceName":{"value": ""},
         "diagnosticsStorageAccountName":{"value": "sadiagnosticdatademo"},
         "vmAddsDnsAdminUsername":{"value": "addsdnsadmin"},
         "vmJumpAdminUsername":{"value": "jumpadmin"},
         "vmSpoke1AdminUsername":{"value": "spoke1admin"},
-        "newAwvdSnetInfo":{"value": [{"name": "snet-hp-data-pool", "range": "10.0.4.64/27"}]},
-        "existingAwvdSnetsInfo":{"value": [{"name": "snet-hp-data-pers", "range": "10.0.4.32/27"}]},
+        "newAvdSnetInfo":{"value": [{"name": "snet-hp-data-pool", "range": "10.0.4.64/27"}]},
+        "existingAvdSnetsInfo":{"value": [{"name": "snet-hp-data-pers", "range": "10.0.4.32/27"}]},
         "fslogixFileShareName":{"value": "fslogixprofiles"}
     }
 }
