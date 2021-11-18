@@ -682,3 +682,7 @@ module extensionsResources 'extensions/extensionsResources.bicep' = {
 */
 
 output logWorkspaceName string = monitoringResources.outputs.logWorkspaceName
+output vmJumpAdminPassword string = vmJumpAdminPassword
+output vmAddsDnsAdminPassword string = vmAddsDnsAdminPassword
+output vmSpoke1AdminPassword string = vmSpoke1AdminPassword
+
