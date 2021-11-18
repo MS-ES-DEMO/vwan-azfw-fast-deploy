@@ -4,5 +4,6 @@ This repository contains the templates required to deploy a Hub and Spoke topolo
 
 The structure is as follow:
 
+- base folder containing the 
 
 
