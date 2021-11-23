@@ -17,8 +17,8 @@
         "vmAddsDnsAdminUsername":{"value": "addsdnsadmin"},
         "vmJumpAdminUsername":{"value": "jumpadmin"},
         "vmSpoke1AdminUsername":{"value": "spoke1admin"},
-        "newAvdSnetInfo":{"value": [{"name": "snet-hp-data-pool", "range": "10.0.4.64/27"}]},
-        "existingAvdSnetsInfo":{"value": [{"name": "snet-hp-data-pers", "range": "10.0.4.32/27"}]},
+        "newAvdSnetInfo":{"value": [{"name": "snet-hp-oper-pool", "range": "10.0.4.128/27"}]},
+        "existingAvdSnetsInfo":{"value": [{"name": "snet-hp-data-pers", "range": "10.0.4.32/27"}, {"name": "snet-hp-data-pool", "range": "10.0.4.64/27"}, {"name": "snet-hp-oper-pers", "range": "10.0.4.96/27"}]},
         "fslogixFileShareName":{"value": "fslogixprofiles"}
     }
 }
