@@ -4,13 +4,13 @@
 Import-Module Tools
 
 #0..255 | Foreach-Object {"$_ : $([char]$_)"}
-$vmJumpAdminPassword = randomPassword
-$vmAddsDnsAdminPassword = randomPassword
-$vmSpoke1AdminPassword = randomPassword
+#$vmJumpAdminPassword = randomPassword
+#$vmAddsDnsAdminPassword = randomPassword
+#$vmSpoke1AdminPassword = randomPassword
 
-#$vmJumpAdminPassword = 'HMAK9Ig3cHIlZTxxguaGK1o3TC'
-#$vmAddsDnsAdminPassword = 'XgXqIlT6LYBydGnhvKd\cue/9q5k'
-#$vmSpoke1AdminPassword = '9M/fzsAfo59lm_Mzah32nMnE_\yACMqzo'
+$vmJumpAdminPassword = 'HMAK9Ig3cHIlZTxxguaGK1o3TC'
+$vmAddsDnsAdminPassword = 'XgXqIlT6LYBydGnhvKd\cue/9q5k'
+$vmSpoke1AdminPassword = '9M/fzsAfo59lm_Mzah32nMnE_\yACMqzo'
 
 $deploymentName="Base-Deployment-$(New-Guid)"
 

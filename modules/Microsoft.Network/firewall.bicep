@@ -42,7 +42,9 @@ resource firewall 'Microsoft.Network/azureFirewalls@2020-06-01' = {
       name: 'AZFW_Hub'
       tier: 'Premium'
     }
-    additionalProperties: {}
+    additionalProperties: {
+      //'Network.FTP.AllowActiveFTP': 'true'
+    }
     hubIPAddresses: {
       publicIPs: {
         /*
