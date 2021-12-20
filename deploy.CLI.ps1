@@ -14,7 +14,7 @@ param (
 
 $deploymentName="$deploymentPrefix-$(New-Guid)"
 
-$params = "{ \`"vmJumpAdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }, \`"vmAddsDnsAdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }, \`"vmSpoke1AdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }}"
+$params = "{ \`"vmAddsDnsAdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }, \`"vmSpoke1AdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }}"
 
 
 az deployment sub create -l $location -n $deploymentName --template-file $templateFile --parameters $parameterFile --parameters $params

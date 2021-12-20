@@ -3,31 +3,28 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "value": "westeurope"
+            "value": "northeurope"
         },
         "env": {
-            "value": "Pre"
+            "value": "Test"
         },
         "monitoringResourceGroupName": {
-            "value": "rg-pre-monitoring"
+            "value": "rg-test-monitoring"
         },
         "hubResourceGroupName": {
-            "value": "rg-pre-hub"
-        },
-        "addsDnsResourceGroupName": {
-            "value": "rg-pre-addsdns"
+            "value": "rg-test-hub"
         },
         "sharedResourceGroupName": {
-            "value": "rg-pre-shared"
+            "value": "rg-test-shared"
         },
         "spoke1ResourceGroupName": {
-            "value": "rg-pre-spoke1"
+            "value": "rg-test-spoke1"
         },
         "securityResourceGroupName": {
-            "value": "rg-pre-security"
+            "value": "rg-test-security"
         },
         "avdResourceGroupName": {
-            "value": "rg-pre-avd"
+            "value": "rg-test-avd"
         },
         "deployLogWorkspace": {
             "value": true
@@ -36,13 +33,10 @@
             "value": ""
         },
         "diagnosticsStorageAccountName": {
-            "value": "sadiagnosticdatademo"
+            "value": "sadiagnosticdatade2"
         },
         "vmAddsDnsAdminUsername": {
             "value": "addsdnsadmin"
-        },
-        "vmJumpAdminUsername": {
-            "value": "jumpadmin"
         },
         "vmSpoke1AdminUsername": {
             "value": "spoke1admin"
@@ -70,9 +64,6 @@
                     "range": "10.0.4.96/27"
                 }
             ]
-        },
-        "fslogixFileShareName": {
-            "value": "fslogixprofiles"
         }
     }
 }

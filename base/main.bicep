@@ -1,15 +1,14 @@
 targetScope = 'subscription'
 
-// TODO: verify the required parameters
-
 // Global Parameters
-@description('Location of the resources')
+
+@description('Azure region where resource would be deployed')
 @allowed([
   'northeurope'
   'westeurope'
 ])
 param location string
-@description('Environment: Dev,Test,Pre,Uat,Prod,ProdDr.')
+@description('Deployment prefix for resources')
 @allowed([
   'Dev'
   'Test'
@@ -19,50 +18,51 @@ param location string
   'ProdDr'
 ])
 param env string
-// resourceGroupNames
-@description('Name for monitoring RG')
+
+// Resource Group Names
+
+@description('Monitoring resource group name')
 param monitoringResourceGroupName string
-@description('Name for hub RG')
+@description('vWAN Hub resource group name')
 param hubResourceGroupName string
-@description('Name for DNS RG')
-param addsDnsResourceGroupName string
-@description('Name for shared services RG')
+@description('Shared services resource group name')
 param sharedResourceGroupName string
-@description('Name for spoke1 RG')
+@description('Spoke resource group name')
 param spoke1ResourceGroupName string
-@description('Name for security RG')
+@description('Security resource group name')
 param securityResourceGroupName string
-@description('Name for AVD RG')
+@description('Azure Virtual Desktop resource group name')
 param avdResourceGroupName string
 
 
-// monitoringResources
+// Monitoring resources
+
 @description('Deploy Log Analytics Workspace?')
 param deployLogWorkspace bool
-@description('Name for existing Log Analytics Workspace')
+@description('Existing Log Analytics Workspace name')
 param existingLogWorkspaceName string = ''
-@description('Name for diagnostic storage account')
+@description('Diagnostic storage account name')
 param diagnosticsStorageAccountName string
 
 
-// securityResources
+// Security resources
 
 
-// addsdnsResources
+// Active Directory Domain Services resources
 
-@description('Name and range for ADDSDNS vNet')
+@description('Active Directory Domain Services virtual network name and range')
 param dnsVnetInfo object = {
     name: 'vnet-addsdns'
     range: '10.0.1.0/24'
 }
-@description('Name and range for ADDSDNS subnets')
+@description('Active Directory Domain Services virtual network subnet name and range')
 param dnsSnetsInfo array = [
   {
   name: 'snet-addsdns'
-  range: '10.0.1.0/26'
+  range: '10.0.2.0/26'
   }
 ]
-@description('Name and rules for ADDSDNS nsg')
+@description('Active Directory Domain Services NSG rules amd name')
 param dnsNicNsgInfo object = {
   name: 'nsg-nic-addsdns'
   inboundRules: [
@@ -72,8 +72,8 @@ param dnsNicNsgInfo object = {
         protocol: 'Tcp'
         sourcePortRange: '*'
         destinationPortRange: '*'
-        sourceAddressPrefix: '10.0.1.0/24'
-        destinationAddressPrefix: '10.0.1.0/26'
+        sourceAddressPrefix: '10.0.2.0/24'
+        destinationAddressPrefix: '10.0.2.0/26'
         access: 'Allow'
         priority: 300
         direction: 'Inbound'
@@ -85,8 +85,8 @@ param dnsNicNsgInfo object = {
         protocol: 'Tcp'
         sourcePortRange: '*'
         destinationPortRange: '*'
-        sourceAddressPrefix: '10.0.1.0/24'
-        destinationAddressPrefix: '10.0.1.0/24'
+        sourceAddressPrefix: '10.0.2.0/24'
+        destinationAddressPrefix: '10.0.2.0/24'
         access: 'Allow'
         priority: 301
         direction: 'Inbound'
@@ -106,14 +106,9 @@ param vmAddsDnsAdminUsername string
 @description('Admin password for ADDSDNS vm')
 @secure()
 param vmAddsDnsAdminPassword string
-//param addsDnsExtensionName string = 'addsdnsextension'
-//param artifactsLocation string = 'https://extensionsavd.blob.core.windows.net/extensions/'
-//param artifactsLocation string = 'https://github.com/MS-ES-DEMO/vwan-azfw-consumption-play/'
-//param domainName string = 'mydomain.local'
 
 
-
-// sharedResources
+// Shared resources
 
 @description('Name and range for shared services vNet')
 param sharedVnetInfo object = {
@@ -159,22 +154,12 @@ param jumpNicNsgInfo object = {
     }
   ]
 }
-@description('Name for Jump Nic')
-param jumpNicName string = 'nic-jump'
+
 @description('Deploy Custom DNS on Shared Services vnet?')
 param deployCustomDnsOnSharedVnet bool = true
-@description('Name for Jump vm')
-param vmJumpName string = 'vm-jump'
-@description('Size for Jump vm')
-param vmJumpSize string = 'Standard_DS3_V2'
-@description('Admin username for Jump vm')
-@secure()
-param vmJumpAdminUsername string
-@description('Admin password for Jump vm')
-@secure()
-param vmJumpAdminPassword string
 
-// spoke1Resources
+
+// Spoke resources
 
 @description('Name and range for spoke1 services vNet')
 param spoke1VnetInfo object = {
@@ -239,11 +224,7 @@ param vmSpoke1AdminUsername string
 @secure()
 param vmSpoke1AdminPassword string
 
-
-
-
-// hubResources
-
+// Hub resources
 
 @description('Name for VWAN')
 param vwanName string = 'vwan-001'
@@ -369,11 +350,6 @@ param firewallName string = 'azfw'
 @description('Name for hub virtual connections')
 param hubVnetConnectionsInfo array = [
   {
-    name: 'hub-to-addsdns'
-    remoteVnetName: 'vnet-addsdns'
-    resourceGroup: addsDnsResourceGroupName
-  }
-  {
     name: 'hub-to-shared'
     remoteVnetName: 'vnet-shared'
     resourceGroup: sharedResourceGroupName
@@ -394,7 +370,7 @@ param storageAccountName string = 'blob${toLower(env)}spoke1'
 @description('Name for blob storage private endpoint')
 param blobStorageAccountPrivateEndpointName string = 'plink-blob-spoke1'
 
-// avdResources
+// Azure Virtual Desktop resources
 
 @description('Name and range for avd vNet')
 param avdVnetInfo object = {
@@ -417,12 +393,6 @@ param newAvdSnetInfo array = [
 ]
 @description('Name and range for existing avd subnets')
 param existingAvdSnetsInfo array = []
-
-
-param fslogixStorageAccountName string = 'fslogix${toLower(env)}profiles'
-param fslogixFileStorageAccountPrivateEndpointName string = 'plink-fslogix-profiles'
-param fslogixFileShareName string
-
 
 
 var avdSnetsInfo = union(azureFilesAvdSnetInfo, newAvdSnetInfo, existingAvdSnetsInfo) 
@@ -473,11 +443,6 @@ resource securityResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' =
   location: location
 }
 
-resource dnsResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: addsDnsResourceGroupName
-  location: location
-}
-
 resource sharedResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
   name: sharedResourceGroupName
   location: location
@@ -502,9 +467,6 @@ resource hubResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
 module monitoringResources 'monitoring/monitoringResources.bicep' = {
   scope: monitoringResourceGroup
   name: 'monitoringResources_Deploy'
-  dependsOn: [
-    monitoringResourceGroup
-  ]
   params: {
     location:location
     env: env
@@ -516,22 +478,20 @@ module monitoringResources 'monitoring/monitoringResources.bicep' = {
 }
 
 module addsDnsResources 'addsdns/addsDnsResources.bicep' = {
-  scope: dnsResourceGroup
+  scope: sharedResourceGroup
   name: 'dnsResources_Deploy'
   dependsOn: [
-    dnsResourceGroup
     monitoringResources
+    sharedResources
   ]
   params: {
     location:location
     tags: tags
-    vnetInfo: dnsVnetInfo 
+    vnetInfo: sharedVnetInfo 
     nsgInfo: dnsNicNsgInfo
     snetsInfo: dnsSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo    
     nicName: addsDnsNicName
-    deployCustomDns: false
-    addsDnsResourceGroupName: addsDnsResourceGroupName
     vmName: vmAddsDnsName
     vmSize: vmAddsDnsSize
     vmAdminUsername: vmAddsDnsAdminUsername
@@ -545,10 +505,6 @@ module addsDnsResources 'addsdns/addsDnsResources.bicep' = {
 module sharedResources 'shared/sharedResources.bicep' = {
   scope: sharedResourceGroup
   name: 'sharedResources_Deploy'
-  dependsOn: [
-    sharedResourceGroup
-    addsDnsResources
-  ]
   params: {
     location:location
     tags: tags
@@ -556,17 +512,9 @@ module sharedResources 'shared/sharedResources.bicep' = {
     nsgInfo: jumpNicNsgInfo
     snetsInfo: sharedSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo 
-    nicName: jumpNicName
     deployCustomDns: deployCustomDnsOnSharedVnet
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: addsDnsResourceGroupName
-    vmName: vmJumpName
-    vmSize: vmJumpSize
-    vmAdminUsername: vmJumpAdminUsername
-    vmAdminPassword: vmJumpAdminPassword
-    diagnosticsStorageAccountName: diagnosticsStorageAccountName
-    logWorkspaceName: monitoringResources.outputs.logWorkspaceName
-    monitoringResourceGroupName: monitoringResourceGroupName
+    addsDnsResourceGroupName: sharedResourceGroupName
   }
 }
 
@@ -574,7 +522,6 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
   scope: spoke1ResourceGroup
   name: 'spoke1Resources_Deploy'
   dependsOn: [
-    spoke1ResourceGroup
     sharedResources
     addsDnsResources
   ]
@@ -588,7 +535,7 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
     nicName: spoke1NicName
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: addsDnsResourceGroupName
+    addsDnsResourceGroupName: sharedResourceGroupName
     vmName: vmSpoke1Name
     vmSize: vmSpoke1Size
     vmAdminUsername: vmSpoke1AdminUsername
@@ -606,7 +553,6 @@ module avdResources 'avd/avdResources.bicep' = {
   scope: avdResourceGroup
   name: 'avdResources_Deploy'
   dependsOn: [
-    avdResourceGroup
     addsDnsResources
     sharedResources
     spoke1Resources
@@ -619,11 +565,7 @@ module avdResources 'avd/avdResources.bicep' = {
     privateDnsZonesInfo: privateDnsZonesInfo 
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: addsDnsResourceGroupName
-    storageAccountName: fslogixStorageAccountName
-    fslogixFileShareName: fslogixFileShareName
-    filePrivateDnsZoneName: privateDnsZonesInfo[1].name
-    fileStorageAccountPrivateEndpointName: fslogixFileStorageAccountPrivateEndpointName
+    addsDnsResourceGroupName: sharedResourceGroupName
   }
 }
 
@@ -632,7 +574,6 @@ module hubResources 'hub/hubResources.bicep' = {
   name: 'hubResources_Deploy1'
   dependsOn: [
     securityResourceGroup
-    hubResourceGroup
     addsDnsResources
     sharedResources
     avdResources
@@ -659,30 +600,5 @@ module hubResources 'hub/hubResources.bicep' = {
   }
 }
 
-/*
-module extensionsResources 'extensions/extensionsResources.bicep' = {
-  scope: dnsResourceGroup
-  name: 'extensionsResources_Deploy'
-  dependsOn: [
-    dnsResourceGroup
-    monitoringResources
-    hubResources
-  ]
-  params: {
-    location:location
-    tags: tags
-    vmName: vmDnsName
-    vmAdminUsername: vmDnsAdminUsername
-    vmAdminPassword: vmDnsAdminPassword
-    addsAndDnsExtensionName: addsAndDnsExtensionName
-    artifactsLocation: artifactsLocation
-    domainName: domainName
-  }
-}
-*/
-
 output logWorkspaceName string = monitoringResources.outputs.logWorkspaceName
-output vmJumpAdminPassword string = vmJumpAdminPassword
-output vmAddsDnsAdminPassword string = vmAddsDnsAdminPassword
-output vmSpoke1AdminPassword string = vmSpoke1AdminPassword
 

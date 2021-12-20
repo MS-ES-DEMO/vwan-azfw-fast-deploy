@@ -9,8 +9,6 @@ param nsgInfo object
 param snetsInfo array
 param privateDnsZonesInfo array
 param nicName string
-param deployCustomDns bool = false
-param addsDnsResourceGroupName string
 param vmName string
 param vmSize string
 @secure()
@@ -20,25 +18,6 @@ param vmAdminPassword string
 param diagnosticsStorageAccountName string
 param logWorkspaceName string
 param monitoringResourceGroupName string
-
-
-
-module vnetResources '../../modules/Microsoft.Network/vnet.bicep' = {
-  name: 'vnetResources_Deploy'
-  dependsOn: [
-    nsgResources
-    nsgInboundRulesResources
-  ]
-  params: {
-    location: location
-    tags: tags
-    vnetInfo: vnetInfo
-    deployCustomDns: deployCustomDns
-    addsDnsNicName: ''
-    addsDnsResourceGroupName: addsDnsResourceGroupName
-    snetsInfo: snetsInfo
-  }
-}
 
 
 module nsgResources '../../modules/Microsoft.Network/nsg.bicep' = {
@@ -64,9 +43,6 @@ module nsgInboundRulesResources '../../modules/Microsoft.Network/nsgRule.bicep' 
 
 module privateDnsZones '../../modules/Microsoft.Network/privateDnsZone.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
   name: 'privateDnsZonesResources_Deploy${i}'
-  dependsOn: [
-    vnetResources
-  ]
   params: {
     location: 'global'
     tags: tags
@@ -77,7 +53,6 @@ module privateDnsZones '../../modules/Microsoft.Network/privateDnsZone.bicep' = 
 module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
   name: 'dnsVnetLinksResources_Deploy${i}'
   dependsOn: [
-    vnetResources
     privateDnsZones
   ]
   params: {
@@ -91,9 +66,6 @@ module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (priva
 
 module nicResources '../../modules/Microsoft.Network/nic.bicep' = {
   name: 'nicResources_Deploy'
-  dependsOn: [
-    vnetResources
-  ]
   params: {
     tags: tags
     name: nicName

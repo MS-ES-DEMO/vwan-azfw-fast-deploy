@@ -18,9 +18,7 @@ New-AzDeployment -Name $deploymentName `
                 -Location $location `
                 -TemplateFile $templateFile `
                 -TemplateParameterFile  $parameterFile `
-                -vmJumpAdminPassword $adminPassword `
                 -vmAddsDnsAdminPassword $adminPassword `
                 -vmSpoke1AdminPassword $adminPassword `
-                -WhatIf
+                -Verbose
 
-##az deployment sub create -l westeurope -n $deploymentName --template-file '.\base\main.bicep' --parameters '.\parameters.json' --parameters $params
