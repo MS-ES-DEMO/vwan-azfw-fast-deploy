@@ -1,0 +1,78 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westeurope"
+        },
+        "env": {
+            "value": "Pre"
+        },
+        "monitoringResourceGroupName": {
+            "value": "rg-pre-monitoring"
+        },
+        "hubResourceGroupName": {
+            "value": "rg-pre-hub"
+        },
+        "addsDnsResourceGroupName": {
+            "value": "rg-pre-addsdns"
+        },
+        "sharedResourceGroupName": {
+            "value": "rg-pre-shared"
+        },
+        "spoke1ResourceGroupName": {
+            "value": "rg-pre-spoke1"
+        },
+        "securityResourceGroupName": {
+            "value": "rg-pre-security"
+        },
+        "avdResourceGroupName": {
+            "value": "rg-pre-avd"
+        },
+        "deployLogWorkspace": {
+            "value": true
+        },
+        "existingLogWorkspaceName": {
+            "value": ""
+        },
+        "diagnosticsStorageAccountName": {
+            "value": "sadiagnosticdatademo"
+        },
+        "vmAddsDnsAdminUsername": {
+            "value": "addsdnsadmin"
+        },
+        "vmJumpAdminUsername": {
+            "value": "jumpadmin"
+        },
+        "vmSpoke1AdminUsername": {
+            "value": "spoke1admin"
+        },
+        "newAvdSnetInfo": {
+            "value": [
+                {
+                    "name": "snet-hp-oper-pool",
+                    "range": "10.0.4.128/27"
+                }
+            ]
+        },
+        "existingAvdSnetsInfo": {
+            "value": [
+                {
+                    "name": "snet-hp-data-pers",
+                    "range": "10.0.4.32/27"
+                },
+                {
+                    "name": "snet-hp-data-pool",
+                    "range": "10.0.4.64/27"
+                },
+                {
+                    "name": "snet-hp-oper-pers",
+                    "range": "10.0.4.96/27"
+                }
+            ]
+        },
+        "fslogixFileShareName": {
+            "value": "fslogixprofiles"
+        }
+    }
+}
