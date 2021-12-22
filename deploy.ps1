@@ -1,16 +1,14 @@
 # Warning: Running this script multiple times will cause the admin
 # password for the VMs to be changed. Comment and uncomment properly.
 
-Import-Module Tools
+Import-Module Tools #  Comment if you prefer to set up the vm Admin Password parameters manually.
 
 #0..255 | Foreach-Object {"$_ : $([char]$_)"}
-#$vmJumpAdminPassword = randomPassword
-#$vmAddsDnsAdminPassword = randomPassword
-#$vmSpoke1AdminPassword = randomPassword
 
-$vmJumpAdminPassword = 'HMAK9Ig3cHIlZTxxguaGK1o3TC'
-$vmAddsDnsAdminPassword = 'XgXqIlT6LYBydGnhvKd\cue/9q5k'
-$vmSpoke1AdminPassword = '9M/fzsAfo59lm_Mzah32nMnE_\yACMqzo'
+# Comment the variables below whether you prefer to set up them manually or are running this script multiple times.
+$vmJumpAdminPassword = randomPassword
+$vmAddsDnsAdminPassword = randomPassword
+$vmSpoke1AdminPassword = randomPassword
 
 $deploymentName="Base-Deployment-$(New-Guid)"
 
