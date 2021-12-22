@@ -4,15 +4,15 @@ This repository contains an Azure Bicep template to simplify the deployment of a
 
 The following diagram shows a detailed architecture of the logical and network topology of the resources created by this template. Relevant resources for the specific scenario coverd in this repository are deployed into the following resource groups:
 
-- **rg-prehub**: resources associated with Azure vWAN.
-- **rg-pre-security**: resources associated with Azure Firewall integrated with Azure vWAN.
-- **rg-pre-montoring**: a storage account and a Log Analytics Workspace to store the diagnostics information.
-- **rg-pre-shared**: resoures associated with a spoke that hosts the common services used by other workloads. For example: Active Directory Domain Services and DNS.
-- **rg-pre-spoke**: an example spoke to show the deployment of an application with consumption of a Private Endpoint.
+- **rg-hub**: resources associated with Azure vWAN.
+- **rg-security**: resources associated with Azure Firewall integrated with Azure vWAN.
+- **rg-montoring**: a storage account and a Log Analytics Workspace to store the diagnostics information.
+- **rg-shared**: resoures associated with a spoke that hosts the common services used by other workloads. For example: Active Directory Domain Services and DNS.
+- **rg-spoke**: an example spoke to show the deployment of an application with consumption of a Private Endpoint.
 
 The following resource groups are associated with other scenarios using this template as a reference for their networking requirements:
 
-- **rg-pre-avd**: network configuration for provisioning Azure Virtual Desktop with different usage scenarios.
+- **rg-avd**: network configuration for provisioning Azure Virtual Desktop with different usage scenarios.
 
 ![Logial architecture](/doc/images/logical-network-diagram.png )
 
@@ -36,33 +36,31 @@ As alternative, you can use [Azure Shell with PowerShell](https://ms.portal.azur
 
 After validating Bicep installation, you would need to configure the Azure subscription where the resources would be deployed. You need to make sure that you have at least enoug quota for creating:
 
-- 1 VWAN
-- as
-- b
-- c
+- 1 vWAN Hub
+- 1 Azure Firewall Standard
+- 2 Standard_DS2_V2 Virtual Machines
+- 2 Storage Account
+- 1 Log Analytics Workspace
+- 3 Private DNS Zones
 
 ## Deployment
 
-1. Customize the parameters.default.json file to adapt their values to your specific environment. You can review the next section to understand the options available.
-2. Execute deploy.ps1 script.
-3. Wait around 40 minutes.
-4. Enjoy
+1. Customize the parameters.default.json file to adapt their values to your specific environment. Some resources like storage accounts required a unique name across all Azure subscriptions. If you use the default name, the deployment may fail because another user has already deploy this template.
+2. Execute deploy.PowerShell.ps1 or deploy.CLI.ps1 script based on the current command line Azure tools available in your computer.
+3. Wait around 30-40 minutes.
+4. Enjoy.
 
 ## Parameters
 
+*The default parameter file contains all the possible options available in this environment. We recommend to adjust only the values of the parameters described here.*
+
 - *location*
   - "type": "string",
-  - "allowed": "northeurope", "westeurope"
   - "description": "Allows to configure the Azure region where the resources should be deployed. Only tested at this time on North Europe and West Eurpope."
 
-- *environment*
+- *resourceGroupNames*
   - "type": "string",
-  - "allowed": "Dev", "Test", "Pre", "Uat", "Prod", "ProdDr"
-  - "description": "Allows to configure the prefix used in the resources created and the tags associated with them"
-
-- *xxxxResourceGroupName*
-  - "type": "string",
-  - "description": "Allows to configure the specific resource group where the resoruces associated with xxxx should be deployed. You can define the same resource group name for all resources in a test environment to simplify management and deletion after finishing with the evaluation."
+  - "description": "Allows to configure the specific resource group where the resources associated to that serice would be deployed. You can define the same resource group name for all resources in a test environment to simplify management and deletion after finishing with the evaluation."
 
 - *deployLogWorkspace*
   - "type": "bool",
@@ -72,12 +70,10 @@ After validating Bicep installation, you would need to configure the Azure subsc
   - "type": "string",
   - "description": "If the previous parameter is configured to true, you need to specific the Log Analytics Workspace name here"
   
-- *vmAddsDnsAdminUsername*
+- *vmAdds.adminUsername*
   - "type": "string",
   - "description": "User name of the local admin configured for the Active Directory Domain Services and DNS virtual machine"
 
-- *vmSpoke1AdminUsername*
+- *vmSpoke1.adminUsername*
   - "type": "string",
   - "description": "User name of the local admin configured for the virtual machine deployed on the application spoke"
-
-*We don't recommend to adjust the values of the other parameters related with networking address spaces. The main.bicep template has several values hardcoded assocaited with those parameters at this time that would require extra modifications if you want to use them.*

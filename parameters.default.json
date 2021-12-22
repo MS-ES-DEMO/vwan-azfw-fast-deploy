@@ -100,7 +100,7 @@
         "vmAdds": {
             "value": {
                 "name": "vm-adds",
-                "sku": "Standard_DS3_V2",
+                "sku": "Standard_DS2_V2",
                 "nicName": "nic-adds",
                 "adminUsername": "azureAdmin"
             }
@@ -108,7 +108,7 @@
         "vmSpoke1": {
             "value": {
                 "name": "vm-spoke1",
-                "sku": "Standard_DS3_V2",
+                "sku": "Standard_DS2_V2",
                 "nicName": "nic-spoke1",
                 "adminUsername": "azureAdmin"
             }
