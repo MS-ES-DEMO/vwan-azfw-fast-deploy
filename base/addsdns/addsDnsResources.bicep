@@ -5,7 +5,6 @@
 param location string = resourceGroup().location
 param tags object
 param vnetInfo object 
-param nsgInfo object
 param snetsInfo array
 param privateDnsZonesInfo array
 param nicName string
@@ -20,47 +19,12 @@ param logWorkspaceName string
 param monitoringResourceGroupName string
 
 
-module nsgResources '../../modules/Microsoft.Network/nsg.bicep' = {
-  name: 'nsgResources_Deploy'
-  params: {
-    location: location
-    tags: tags
-    name: nsgInfo.name
-  }
-}
-
-module nsgInboundRulesResources '../../modules/Microsoft.Network/nsgRule.bicep' = [ for (ruleInfo, i) in nsgInfo.inboundRules: {
-  name: 'nsgInboundRulesResources_Deploy${i}'
-  dependsOn: [
-    nsgResources 
-  ]
-  params: {
-    name: ruleInfo.name
-    rule: ruleInfo.rule
-    nsgName: nsgInfo.name
-  }
-}]
-
 module privateDnsZones '../../modules/Microsoft.Network/privateDnsZone.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
   name: 'privateDnsZonesResources_Deploy${i}'
   params: {
     location: 'global'
     tags: tags
     name: privateDnsZoneInfo.name
-  }
-}]
-
-module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
-  name: 'dnsVnetLinksResources_Deploy${i}'
-  dependsOn: [
-    privateDnsZones
-  ]
-  params: {
-    tags: tags
-    name: '${privateDnsZoneInfo.vnetLinkName}dns'
-    vnetName: vnetInfo.name
-    privateDnsZoneName: privateDnsZoneInfo.name
-    vnetResourceGroupName: resourceGroup().name
   }
 }]
 
@@ -72,7 +36,7 @@ module nicResources '../../modules/Microsoft.Network/nic.bicep' = {
     vnetName: vnetInfo.name
     vnetResourceGroupName: resourceGroup().name
     snetName: snetsInfo[0].name
-    nsgName: nsgInfo.name
+    nsgName: ''
   }
 }
 
