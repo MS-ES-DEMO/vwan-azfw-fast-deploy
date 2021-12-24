@@ -1,6 +1,6 @@
 param (
   [Parameter(Mandatory = $true)]
-  [string]
+  [SecureString]
   $adminPassword,
   [string]
   $location = "westeurope",

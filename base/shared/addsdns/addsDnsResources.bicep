@@ -6,7 +6,6 @@ param location string = resourceGroup().location
 param tags object
 param vnetInfo object 
 param snetsInfo array
-param privateDnsZonesInfo array
 param nicName string
 param vmName string
 param vmSize string
@@ -19,16 +18,7 @@ param logWorkspaceName string
 param monitoringResourceGroupName string
 
 
-module privateDnsZones '../../modules/Microsoft.Network/privateDnsZone.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
-  name: 'privateDnsZonesResources_Deploy${i}'
-  params: {
-    location: 'global'
-    tags: tags
-    name: privateDnsZoneInfo.name
-  }
-}]
-
-module nicResources '../../modules/Microsoft.Network/nic.bicep' = {
+module nicResources '../../../modules/Microsoft.Network/nic.bicep' = {
   name: 'nicResources_Deploy'
   params: {
     tags: tags
@@ -40,7 +30,7 @@ module nicResources '../../modules/Microsoft.Network/nic.bicep' = {
   }
 }
 
-module vmResources '../../modules/Microsoft.Compute/vm.bicep' = {
+module vmResources '../../../modules/Microsoft.Compute/vm.bicep' = {
   name: 'vmResources_Deploy'
   dependsOn: [
     nicResources
@@ -55,7 +45,7 @@ module vmResources '../../modules/Microsoft.Compute/vm.bicep' = {
   }
 }
 
-module daExtensionResources '../../modules/Microsoft.Compute/daExtension.bicep' = {
+module daExtensionResources '../../../modules/Microsoft.Compute/daExtension.bicep' = {
   name: 'daExtensionResources_Deploy'
   dependsOn: [
     vmResources
@@ -67,7 +57,7 @@ module daExtensionResources '../../modules/Microsoft.Compute/daExtension.bicep' 
   }
 }
 
-module diagnosticsExtensionResources '../../modules/Microsoft.Compute/diagnosticsExtension.bicep' = {
+module diagnosticsExtensionResources '../../../modules/Microsoft.Compute/diagnosticsExtension.bicep' = {
   name: 'diagnosticsExtensionResources_Deploy'
   dependsOn: [
     vmResources
@@ -82,7 +72,7 @@ module diagnosticsExtensionResources '../../modules/Microsoft.Compute/diagnostic
   }
 }
 
-module monitoringAgentExtensionResources '../../modules/Microsoft.Compute/monitoringAgentExtension.bicep' = {
+module monitoringAgentExtensionResources '../../../modules/Microsoft.Compute/monitoringAgentExtension.bicep' = {
   name: 'monitoringAgentExtensionResources_Deploy'
   dependsOn: [
     vmResources

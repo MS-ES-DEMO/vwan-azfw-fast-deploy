@@ -11,7 +11,7 @@ param privateDnsZonesInfo array
 param nicName string
 param deployCustomDns bool = true
 param addsDnsNicName string
-param addsDnsResourceGroupName string
+param sharedResourceGroupName string
 param vmName string
 param vmSize string
 @secure()
@@ -34,14 +34,14 @@ module vnetResources '../../modules/Microsoft.Network/vnet.bicep' = {
     vnetInfo: vnetInfo
     deployCustomDns: deployCustomDns
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: addsDnsResourceGroupName
+    sharedResourceGroupName: sharedResourceGroupName
     snetsInfo: snetsInfo
   }
 }
 
 module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
   name: 'spoke1VnetLinksResources_Deploy${i}'
-  scope: resourceGroup(addsDnsResourceGroupName)
+  scope: resourceGroup(sharedResourceGroupName)
   dependsOn: [
     vnetResources
   ]
@@ -148,7 +148,7 @@ module blobPrivateEndpointResources '../../modules/Microsoft.Network/storagePriv
     storageAccountName: storageAccountName
     privateDnsZoneName: blobPrivateDnsZoneName
     groupIds: 'blob'
-    addsDnsResourceGroupName: addsDnsResourceGroupName
+    sharedResourceGroupName: sharedResourceGroupName
   }
 }
 

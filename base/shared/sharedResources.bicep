@@ -6,9 +6,7 @@ param vnetInfo object
 param snetsInfo array
 param privateDnsZonesInfo array
 
-param deployCustomDns bool = false
 param addsDnsNicName string
-param addsDnsResourceGroupName string
 
 param vmAddsDnsName string
 param vmAddsDnsSize string
@@ -28,14 +26,16 @@ module vnetResources '../../modules/Microsoft.Network/vnet.nodns.bicep' = {
   }
 }
 
-module addsDnsResources '../addsdns/addsDnsResources.bicep' = {
+module addsDnsResources '../shared/addsdns/addsDnsResources.bicep' = {
   name: 'dnsResources_Deploy'
+  dependsOn: [
+    vnetResources
+  ]
   params: {
     location:location
     tags: tags
     vnetInfo: vnetInfo 
-    snetsInfo: snetsInfo
-    privateDnsZonesInfo: privateDnsZonesInfo    
+    snetsInfo: snetsInfo  
     nicName: addsDnsNicName
     vmName: vmAddsDnsName
     vmSize: vmAddsDnsSize
@@ -48,27 +48,23 @@ module addsDnsResources '../addsdns/addsDnsResources.bicep' = {
 }
 
 
-module vnetUpdateResources '../../modules/Microsoft.Network/vnet.bicep' = {
-  name: 'vnetUpdateResources_Deploy'
+module privateDnsZones '../../modules/Microsoft.Network/privateDnsZone.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
+  name: 'privateDnsZonesResources_Deploy${i}'
   dependsOn: [
-    addsDnsResources
+    vnetResources
   ]
   params: {
-    location: location
+    location: 'global'
     tags: tags
-    vnetInfo: vnetInfo
-    deployCustomDns: deployCustomDns
-    snetsInfo: snetsInfo
-    addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: addsDnsResourceGroupName
+    name: privateDnsZoneInfo.name
   }
-}
+}]
 
 module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (privateDnsZoneInfo, i) in privateDnsZonesInfo : {
   name: 'sharedVnetLinksResources_Deploy${i}'
-  scope: resourceGroup(addsDnsResourceGroupName)
   dependsOn: [
     vnetResources
+    privateDnsZones
   ]
   params: {
     tags: tags

@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location": {
-            "value": "northeurope"
+            "value": "westeurope"
         },
         "env": {
             "value": "dev"
@@ -33,12 +33,11 @@
         "sharedVnetInfo": {
             "value": {
                 "name": "vnet-shared",
-                "range": "10.0.2.0/24",
-                "deployCustomDnsOnSharedVnet": true,
+                "range": "10.0.1.0/24",
                 "subnets": [
                     {
                         "name": "snet-addns",
-                        "range": "10.0.2.0/26"
+                        "range": "10.0.1.0/26"
                     }
                 ]
             }
@@ -46,16 +45,16 @@
         "spoke1VnetInfo": {
             "value": {
                 "name": "vnet-spoke1",
-                "range": "10.0.3.0/24",
+                "range": "10.0.2.0/24",
                 "deployCustomDnsOnSharedVnet": true,
                 "subnets": [
                     {
                         "name": "snet-app",
-                        "range": "10.0.3.0/26"
+                        "range": "10.0.2.0/26"
                     },
                     {
                         "name": "snet-plinks",
-                        "range": "10.0.3.64/26"
+                        "range": "10.0.2.64/26"
                     }
                 ]
             }
@@ -72,27 +71,28 @@
         "avdVnetInfo": {
             "value": {
                 "name": "vnet-avd",
-                "range": "10.0.4.0/23",
+                "range": "10.0.3.0/23",
+                "deployCustomDnsOnSharedVnet": true,
                 "subnets": [
                     {
                         "name": "snet-profile-shares",
-                        "range": "10.0.4.0/27"
+                        "range": "10.0.3.0/27"
                     },
                     {
                         "name": "snet-hp-oper-pool",
-                        "range": "10.0.4.128/27"
+                        "range": "10.0.3.128/27"
                     },
                     {
                         "name": "snet-hp-data-pers",
-                        "range": "10.0.4.32/27"
+                        "range": "10.0.3.32/27"
                     },
                     {
                         "name": "snet-hp-data-pool",
-                        "range": "10.0.4.64/27"
+                        "range": "10.0.3.64/27"
                     },
                     {
                         "name": "snet-hp-oper-pers",
-                        "range": "10.0.4.96/27"
+                        "range": "10.0.3.96/27"
                     }
                 ]
             }

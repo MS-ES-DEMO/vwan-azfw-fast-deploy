@@ -1,10 +1,7 @@
 
 param location string = resourceGroup().location
 param tags object
-param vnetInfo object = {
-    name: 'adds'
-    range: '10.0.1.0/24'
-}
+param vnetInfo object
 
 
 param snetsInfo array

@@ -1,18 +1,15 @@
 
 param location string = resourceGroup().location
 param tags object
-param vnetInfo object = {
-    name: 'adds'
-    range: '10.0.1.0/24'
-}
+param vnetInfo object 
 param addsDnsNicName string
-param addsDnsResourceGroupName string
+param sharedResourceGroupName string
 param deployCustomDns bool
 param snetsInfo array
 
 resource dnsNic 'Microsoft.Network/networkInterfaces@2021-02-01' existing = if (deployCustomDns) {
   name: addsDnsNicName
-  scope: resourceGroup(addsDnsResourceGroupName)
+  scope: resourceGroup(sharedResourceGroupName)
 }
 
 resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
