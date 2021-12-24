@@ -71,28 +71,28 @@
         "avdVnetInfo": {
             "value": {
                 "name": "vnet-avd",
-                "range": "10.0.3.0/23",
+                "range": "10.0.4.0/23",
                 "deployCustomDns": true,
                 "subnets": [
                     {
                         "name": "snet-profile-shares",
-                        "range": "10.0.3.0/27"
+                        "range": "10.0.4.0/27"
                     },
                     {
                         "name": "snet-hp-oper-pool",
-                        "range": "10.0.3.128/27"
+                        "range": "10.0.4.128/27"
                     },
                     {
                         "name": "snet-hp-data-pers",
-                        "range": "10.0.3.32/27"
+                        "range": "10.0.4.32/27"
                     },
                     {
                         "name": "snet-hp-data-pool",
-                        "range": "10.0.3.64/27"
+                        "range": "10.0.4.64/27"
                     },
                     {
                         "name": "snet-hp-oper-pers",
-                        "range": "10.0.3.96/27"
+                        "range": "10.0.4.96/27"
                     }
                 ]
             }
