@@ -27,7 +27,7 @@
             "value": {
                 "deployLogAnalyticsWorkspace": true,
                 "existingLogAnalyticsWorkspaceName": "",
-                "diagnosticsStorageAccountName": "sadiagnosticdatademo"
+                "diagnosticsStorageAccountName": "sadiagnosticdatadev"
             }
         },
         "sharedVnetInfo": {
@@ -46,7 +46,7 @@
             "value": {
                 "name": "vnet-spoke1",
                 "range": "10.0.2.0/24",
-                "deployCustomDnsOnSharedVnet": true,
+                "deployCustomDns": true,
                 "subnets": [
                     {
                         "name": "snet-app",
@@ -72,7 +72,7 @@
             "value": {
                 "name": "vnet-avd",
                 "range": "10.0.3.0/23",
-                "deployCustomDnsOnSharedVnet": true,
+                "deployCustomDns": true,
                 "subnets": [
                     {
                         "name": "snet-profile-shares",

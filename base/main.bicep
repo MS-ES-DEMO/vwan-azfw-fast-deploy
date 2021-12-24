@@ -83,7 +83,7 @@ var privateDnsZonesInfo = [
 param spoke1VnetInfo object 
 
 var spoke1SnetsInfo = spoke1VnetInfo.subnets
-var deployCustomDnsOnSpoke1Vnet = sharedVnetInfo.deployCustomDnsOnSharedVnet
+var deployCustomDnsOnSpoke1Vnet = spoke1VnetInfo.deployCustomDns
 
 @description('Spoke1 VM configuration details')
 param vmSpoke1 object 
@@ -161,6 +161,8 @@ var privateTrafficPrefix = [
 @description('Name and range for avd vNet')
 param avdVnetInfo object 
 var avdSnetsInfo = avdVnetInfo.subnets
+
+var deployCustomDnsOnAvdVnet = avdVnetInfo.deployCustomDns
 
 
 /* 
@@ -284,7 +286,7 @@ module avdResources 'avd/avdResources.bicep' = {
     vnetInfo: avdVnetInfo 
     snetsInfo: avdSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo 
-    deployCustomDns: deployCustomDnsOnSpoke1Vnet
+    deployCustomDns: deployCustomDnsOnAvdVnet
     addsDnsNicName: addsDnsNicName
     sharedResourceGroupName: sharedResourceGroupName
   }
