@@ -6,7 +6,7 @@ The following diagram shows a detailed architecture of the logical and network t
 
 - **rg-hub**: resources associated with Azure vWAN.
 - **rg-security**: resources associated with Azure Firewall integrated with Azure vWAN.
-- **rg-montoring**: a storage account and a Log Analytics Workspace to store the diagnostics information.
+- **rg-montor**: a storage account and a Log Analytics Workspace to store the diagnostics information.
 - **rg-shared**: resoures associated with a spoke that hosts the common services used by other workloads. For example: Active Directory Domain Services and DNS.
 - **rg-spoke**: an example spoke to show the deployment of an application with consumption of a Private Endpoint.
 
@@ -34,7 +34,7 @@ Bicep is the language used for defining declaratively the Azure resources requir
 
 As alternative, you can use [Azure Shell with PowerShell](https://ms.portal.azure.com/#cloudshell/) that already includes support for Bicep.
 
-After validating Bicep installation, you would need to configure the Azure subscription where the resources would be deployed. You need to make sure that you have at least enoug quota for creating:
+After validating Bicep installation, you would need to configure the Azure subscription where the resources would be deployed. You need to make sure that you have at least enough quota for creating:
 
 - 1 vWAN Hub
 - 1 Azure Firewall Standard
@@ -43,7 +43,7 @@ After validating Bicep installation, you would need to configure the Azure subsc
 - 1 Log Analytics Workspace
 - 3 Private DNS Zones
 
-## Deployment
+## How to deploy
 
 1. Customize the parameters.default.json file to adapt their values to your specific environment. Some resources like storage accounts required a unique name across all Azure subscriptions. If you use the default name, the deployment may fail because another user has already deploy this template.
 2. Execute deploy.PowerShell.ps1 or deploy.CLI.ps1 script based on the current command line Azure tools available in your computer.
