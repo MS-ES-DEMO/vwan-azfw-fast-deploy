@@ -9,6 +9,7 @@ param location string
 param env string
 @description('Tags associated with all resources')
 param tags object 
+
 // Resource Group Names
 
 @description('Resource Groups names')

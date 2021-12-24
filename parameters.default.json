@@ -27,7 +27,7 @@
             "value": {
                 "deployLogAnalyticsWorkspace": true,
                 "existingLogAnalyticsWorkspaceName": "",
-                "diagnosticsStorageAccountName": "sadiagnosticdatafdjo"
+                "diagnosticsStorageAccountName": "sadiagnosticdatademo"
             }
         },
         "sharedVnetInfo": {
