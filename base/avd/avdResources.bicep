@@ -10,12 +10,6 @@ param privateDnsZonesInfo array
 param deployCustomDns bool = true
 param addsDnsNicName string
 param addsDnsResourceGroupName string
-param storageAccountName string
-param fslogixFileShareName string
-param fileStorageAccountPrivateEndpointName string
-param filePrivateDnsZoneName string
-
-
 
 module vnetResources '../../modules/Microsoft.Network/vnet.bicep' = {
   name: 'vnetResources_Deploy'
@@ -44,45 +38,6 @@ module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (priva
     vnetResourceGroupName: resourceGroup().name
   }
 }]
-
-module storageAccountResources '../../modules/Microsoft.Storage/storageAccount.bicep' = {
-  name: 'storageAccountResources_Deploy'
-  params: {
-    location: location
-    tags: tags
-    name: storageAccountName
-  }
-}
-
-module fileShareResources '../../modules/Microsoft.Storage/fileShare.bicep' = {
-  name: 'fileShareResources_Deploy'
-  dependsOn: [
-    storageAccountResources
-  ]
-  params: {
-    name: fslogixFileShareName
-    storageAccountName: storageAccountName
-  }
-}
-
-module filePrivateEndpointResources '../../modules/Microsoft.Network/storagePrivateEndpoint.bicep' = {
-  name: 'filePrivateEndpointResources_Deploy'
-  dependsOn: [
-    vnetResources
-    storageAccountResources
-  ]
-  params: {
-    location: location
-    tags: tags
-    name: fileStorageAccountPrivateEndpointName
-    vnetName: vnetInfo.name
-    snetName: snetsInfo[0].name
-    storageAccountName: storageAccountName
-    privateDnsZoneName: filePrivateDnsZoneName
-    groupIds: 'file'
-    addsDnsResourceGroupName: addsDnsResourceGroupName
-  }
-}
 
 
 

@@ -1,12 +1,7 @@
-
-// TODO: verify the required parameters
-
 // Global Parameters
 param location string = resourceGroup().location
 param env string
 param tags object
-//@description('Name for Monitoring RG')
-//param monitoringResourceGroupName string
 param deployLogWorkspace bool
 param existingLogWorkspaceName string
 param diagnosticsStorageAccountName string
@@ -14,7 +9,6 @@ param diagnosticsStorageAccountName string
 var logWorkspaceName = 'workspace-${toLower(env)}-base'
 
 module logWorkspaceResources '../../modules/Microsoft.OperationalInsights/logWorkspace.bicep' = if (deployLogWorkspace) {
-  //scope: resourceGroup(monitoringResourceGroupName)
   name: 'logWorkspaceResources_Deploy'
   params: {
     location: location
@@ -63,7 +57,6 @@ module vmInsightsSolution '../../modules/Microsoft.OperationsManagement/solution
     publisher: 'Microsoft'
   }
 }
-
 
 module datasources '../../modules/Microsoft.OperationalInsights/datasources.bicep' = {
   name: 'datasources_Deploy'

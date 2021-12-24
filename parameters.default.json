@@ -1,0 +1,233 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "northeurope"
+        },
+        "env": {
+            "value": "dev"
+        },
+        "tags": {
+            "value": {
+                "project": "fd-vwan"
+            }
+        },
+        "resourceGroupNames": {
+            "value": {
+                "monitoring": "rg-monitor",
+                "hub": "rg-hub",
+                "shared": "rg-shared",
+                "spoke1": "rg-spoke1",
+                "security": "rg-security",
+                "avd": "rg-avd"
+            }
+        },
+        "monitoringOptions": {
+            "value": {
+                "deployLogAnalyticsWorkspace": true,
+                "existingLogAnalyticsWorkspaceName": "",
+                "diagnosticsStorageAccountName": "sadiagnosticdatafdjo"
+            }
+        },
+        "sharedVnetInfo": {
+            "value": {
+                "name": "vnet-shared",
+                "range": "10.0.2.0/24",
+                "deployCustomDnsOnSharedVnet": true,
+                "subnets": [
+                    {
+                        "name": "snet-addns",
+                        "range": "10.0.2.0/26"
+                    }
+                ]
+            }
+        },
+        "spoke1VnetInfo": {
+            "value": {
+                "name": "vnet-spoke1",
+                "range": "10.0.3.0/24",
+                "deployCustomDnsOnSharedVnet": true,
+                "subnets": [
+                    {
+                        "name": "snet-app",
+                        "range": "10.0.3.0/26"
+                    },
+                    {
+                        "name": "snet-plinks",
+                        "range": "10.0.3.64/26"
+                    }
+                ]
+            }
+        },
+        "vwanName": {
+            "value": "vwan-001"
+        },
+        "hubVnetInfo": {
+            "value": {
+                "name": "hub-001",
+                "range": "10.0.0.0/24"
+            }
+        },
+        "avdVnetInfo": {
+            "value": {
+                "name": "vnet-avd",
+                "range": "10.0.4.0/23",
+                "subnets": [
+                    {
+                        "name": "snet-profile-shares",
+                        "range": "10.0.4.0/27"
+                    },
+                    {
+                        "name": "snet-hp-oper-pool",
+                        "range": "10.0.4.128/27"
+                    },
+                    {
+                        "name": "snet-hp-data-pers",
+                        "range": "10.0.4.32/27"
+                    },
+                    {
+                        "name": "snet-hp-data-pool",
+                        "range": "10.0.4.64/27"
+                    },
+                    {
+                        "name": "snet-hp-oper-pers",
+                        "range": "10.0.4.96/27"
+                    }
+                ]
+            }
+        },
+        "vmAdds": {
+            "value": {
+                "name": "vm-adds",
+                "sku": "Standard_DS2_V2",
+                "nicName": "nic-adds",
+                "adminUsername": "azureAdmin"
+            }
+        },
+        "vmSpoke1": {
+            "value": {
+                "name": "vm-spoke1",
+                "sku": "Standard_DS2_V2",
+                "nicName": "nic-spoke1",
+                "adminUsername": "azureAdmin"
+            }
+        },
+        "privateEndpoints": {
+            "value": {
+                "spoke1StorageAccount" : {
+                    "name" : "blobdevspoke1",
+                    "privateEndpointName": "plink-blob-spoke1"
+                }
+            }
+        },
+        "firewallConfiguration": {
+            "value": {
+                "name": "azfw",
+                "ipName": "pip-fw",
+                "policy": {
+                    "name": "fwpolicy-001",
+                    "snatRanges": [
+                        "129.35.65.13",
+                        "82.132.128.0/17",
+                        "158.230.0.0/18",
+                        "158.230.64.0/19",
+                        "158.230.104.0/21",
+                        "158.230.112.0/20",
+                        "158.230.128.0/18",
+                        "193.35.171.0/24",
+                        "193.35.173.0/25",
+                        "193.113.120.0/25",
+                        "193.113.121.128/25",
+                        "193.113.160.0/25",
+                        "193.113.160.128/26",
+                        "193.113.200.128/25",
+                        "193.113.228.0/24",
+                        "193.132.40.0/24",
+                        "216.239.204.0/26",
+                        "216.239.204.192/26",
+                        "216.239.205.192/26",
+                        "216.239.206.0/25",
+                        "10.0.0.0/8",
+                        "172.16.0.0/12",
+                        "192.168.0.0/16",
+                        "100.64.0.0/10"
+                    ]
+                },
+                "appCollectionRules": {
+                    "name": "fwapprulegroup",
+                    "rulesInfo": {
+                        "priority": 300,
+                        "ruleCollections": [
+                            {
+                                "ruleCollectionType": "FirewallPolicyFilterRuleCollection",
+                                "action": {
+                                    "type": "Allow"
+                                },
+                                "name": "AzureMonitorRuleCollection",
+                                "priority": 100,
+                                "rules": [
+                                    {
+                                        "ruleType": "ApplicationRule",
+                                        "name": "Allow-AzureMonitor",
+                                        "protocols": [
+                                            {
+                                                "protocolType": "Https",
+                                                "port": 443
+                                            }
+                                        ],
+                                        "targetFqdns": [
+                                            "*.monitor.core.windows.net"
+                                        ],
+                                        "sourceAddresses": [
+                                            "*"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "networkCollectionRules": {
+                    "name": "fwapprulegroup",
+                    "rulesInfo": {
+                        "priority": 200,
+                        "ruleCollections": [
+                            {
+                                "ruleCollectionType": "FirewallPolicyFilterRuleCollection",
+                                "name": "Windows",
+                                "action": {
+                                    "type": "Allow"
+                                },
+                                "priority": 210,
+                                "rules": [
+                                    {
+                                        "ruleType": "NetworkRule",
+                                        "sourceAddresses": [
+                                            "*"
+                                        ],
+                                        "destinationAddresses": [
+                                            "*"
+                                        ],
+                                        "destinationPorts": [
+                                            "*"
+                                        ],
+                                        "ipProtocols": [
+                                            "Any"
+                                        ],
+                                        "name": "All-Traffic-Allowed"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "dnatCollectionRules": {
+                    "name": "fwdnatrulegroup",
+                    "priority": "",
+                    "ruleSet": []
+                }
+            }
+        }
+    }
+}
