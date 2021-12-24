@@ -57,7 +57,24 @@ param vmAddsDnsAdminPassword string
 param sharedVnetInfo object 
 
 var sharedSnetsInfo  = sharedVnetInfo.subnets
-var deployCustomDnsOnSharedVnet  = sharedVnetInfo.deployCustomDnsOnSharedVnet
+
+var privateDnsZonesInfo = [
+  {
+    name: format('privatelink.blob.{0}', environment().suffixes.storage)
+    vnetLinkName: 'vnet-link-blob-to-'
+    vnetName: sharedVnetInfo.name
+  }
+  {
+    name: format('privatelink.file.{0}', environment().suffixes.storage)
+    vnetLinkName: 'vnet-link-file-to-'
+    vnetName: sharedVnetInfo.name
+  }
+  {
+    name: format('privatelink{0}', environment().suffixes.sqlServerHostname)
+    vnetLinkName: 'vnet-link-sqldatabase-to-'
+    vnetName: sharedVnetInfo.name
+  }
+]
 
 
 // Spoke resources
@@ -81,6 +98,12 @@ var vmSpoke1AdminUsername = vmSpoke1.adminUsername
 @secure()
 param vmSpoke1AdminPassword string
 
+
+param privateEndpoints object
+
+var storageAccountName = privateEndpoints.spoke1StorageAccount.name
+var blobStorageAccountPrivateEndpointName  = privateEndpoints.spoke1StorageAccount.privateEndpointName
+
 // Hub resources
 
 @description('Name for VWAN')
@@ -94,7 +117,7 @@ param firewallConfiguration object
 var fwPublicIpName = firewallConfiguration.ipName
 var firewallName = firewallConfiguration.name
 
-var fwPolicyInfo  = firewallConfiguration.policy
+var fwPolicyInfo = firewallConfiguration.policy
 var appRuleCollectionGroupName = firewallConfiguration.appCollectionRules.name
 var appRulesInfo = firewallConfiguration.appCollectionRules.rulesInfo
 
@@ -123,10 +146,15 @@ param hubVnetConnectionsInfo array = [
   }
 ]
 
-param privateEndpoints object
+var privateTrafficPrefix = [
+  '0.0.0.0/0'
+  '172.16.0.0/12' 
+  '192.168.0.0/16'
+  '${sharedVnetInfo.range}'
+  '${spoke1VnetInfo.range}'
+  '${avdVnetInfo.range}'
+]
 
-var storageAccountName = privateEndpoints.spoke1StorageAccount.name
-var blobStorageAccountPrivateEndpointName  = privateEndpoints.spoke1StorageAccount.privateEndpointName
 
 // Azure Virtual Desktop resources
 
@@ -134,33 +162,6 @@ var blobStorageAccountPrivateEndpointName  = privateEndpoints.spoke1StorageAccou
 param avdVnetInfo object 
 var avdSnetsInfo = avdVnetInfo.subnets
 
-var privateDnsZonesInfo = [
-  {
-    name: format('privatelink.blob.{0}', environment().suffixes.storage)
-    vnetLinkName: 'vnet-link-blob-to-'
-    vnetName: 'vnet-addsdns'
-  }
-  {
-    name: format('privatelink.file.{0}', environment().suffixes.storage)
-    vnetLinkName: 'vnet-link-file-to-'
-    vnetName: 'vnet-addsdns'
-  }
-  {
-    name: format('privatelink{0}', environment().suffixes.sqlServerHostname)
-    vnetLinkName: 'vnet-link-sqldatabase-to-'
-    vnetName: 'vnet-addsdns'
-  }
-]
-
-
-var privateTrafficPrefix = [
-    '0.0.0.0/0'
-    '172.16.0.0/12' 
-    '192.168.0.0/16'
-    '${sharedVnetInfo.range}'
-    '${spoke1VnetInfo.range}'
-    '${avdVnetInfo.range}'
-]
 
 /* 
   Monitoring resources deployment 
@@ -209,9 +210,7 @@ module sharedResources 'shared/sharedResources.bicep' = {
     vnetInfo: sharedVnetInfo 
     snetsInfo: sharedSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo 
-    deployCustomDns: deployCustomDnsOnSharedVnet
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: sharedResourceGroupName
     diagnosticsStorageAccountName: diagnosticsStorageAccountName
     monitoringResourceGroupName: monitoringResourceGroupName
     logWorkspaceName: monitoringResources.outputs.logWorkspaceName
@@ -248,7 +247,7 @@ module spoke1Resources 'spokes/spoke1Resources.bicep' = {
     nicName: spoke1NicName
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: sharedResourceGroupName
+    sharedResourceGroupName: sharedResourceGroupName
     vmName: vmSpoke1Name
     vmSize: vmSpoke1Size
     vmAdminUsername: vmSpoke1AdminUsername
@@ -287,7 +286,7 @@ module avdResources 'avd/avdResources.bicep' = {
     privateDnsZonesInfo: privateDnsZonesInfo 
     deployCustomDns: deployCustomDnsOnSpoke1Vnet
     addsDnsNicName: addsDnsNicName
-    addsDnsResourceGroupName: sharedResourceGroupName
+    sharedResourceGroupName: sharedResourceGroupName
   }
 }
 
