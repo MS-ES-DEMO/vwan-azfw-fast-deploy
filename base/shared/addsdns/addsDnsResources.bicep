@@ -16,6 +16,9 @@ param vmAdminPassword string
 param diagnosticsStorageAccountName string
 param logWorkspaceName string
 param monitoringResourceGroupName string
+param addsDnsExtensionName string
+param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
+param domainName string
 
 
 module nicResources '../../../modules/Microsoft.Network/nic.bicep' = {
@@ -85,6 +88,24 @@ module monitoringAgentExtensionResources '../../../modules/Microsoft.Compute/mon
     vmName: vmName
     logWorkspaceName: logWorkspaceName
     monitoringResourceGroupName: monitoringResourceGroupName
+  }
+}
+
+module addsDnsExtensionResources '../../../modules/Microsoft.Compute/addsDnsExtension.bicep' = {
+  name: 'addsDnsExtensionResources_Deploy'
+  dependsOn: [
+    vmResources
+    monitoringAgentExtensionResources
+  ]
+  params: {
+    location: location
+    tags: tags
+    name: addsDnsExtensionName
+    vmName: vmName
+    artifactsLocation: artifactsLocation
+    domainName: domainName
+    adminUsername: vmAdminUsername
+    adminPassword: vmAdminPassword
   }
 }
 

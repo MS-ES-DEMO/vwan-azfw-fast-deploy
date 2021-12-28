@@ -44,6 +44,9 @@ var vmAddsDnsName = vmAdds.name
 var vmAddsDnsSize = vmAdds.sku
 var addsDnsNicName  = vmAdds.nicName
 var vmAddsDnsAdminUsername = vmAdds.adminUsername
+var addsDnsExtensionName = vmAdds.extensionName
+var artifactsLocation = vmAdds.artifactsLocation
+var domainName = vmAdds.domainName
 
 
 @description('Admin password for ADDSDNS vm')
@@ -220,6 +223,9 @@ module sharedResources 'shared/sharedResources.bicep' = {
     vmAddsDnsAdminUsername: vmAddsDnsAdminUsername
     vmAddsDnsName: vmAddsDnsName
     vmAddsDnsSize: vmAddsDnsSize
+    addsDnsExtensionName: addsDnsExtensionName
+    artifactsLocation: artifactsLocation
+    domainName: domainName
   }
 }
 

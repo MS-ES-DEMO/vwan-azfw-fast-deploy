@@ -16,6 +16,10 @@ param diagnosticsStorageAccountName string
 param logWorkspaceName string
 param monitoringResourceGroupName string
 
+param addsDnsExtensionName string
+param artifactsLocation string
+param domainName string
+
 module vnetResources '../../modules/Microsoft.Network/vnet.nodns.bicep' = {
   name: 'vnetResources_Deploy'
   params: {
@@ -44,6 +48,9 @@ module addsDnsResources '../shared/addsdns/addsDnsResources.bicep' = {
     diagnosticsStorageAccountName: diagnosticsStorageAccountName
     logWorkspaceName: logWorkspaceName
     monitoringResourceGroupName: monitoringResourceGroupName
+    addsDnsExtensionName: addsDnsExtensionName
+    artifactsLocation: artifactsLocation
+    domainName: domainName
   }
 }
 
