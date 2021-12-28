@@ -104,7 +104,7 @@
                 "nicName": "nic-adds",
                 "adminUsername": "azureAdmin",
                 "extensionName": "addsDnsExtension",
-                "artifactLocation": "https://extensionsawvd.blob.core.windows.net/extensions/",
+                "artifactLocation": "https://extensionsavd.blob.core.windows.net/extensions/",
                 "domainName": "mydomain.local"
             }
         },

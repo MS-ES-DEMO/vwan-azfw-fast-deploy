@@ -1,12 +1,12 @@
 # Fast Deploy: Hub-spoke network topology with Azure Virtual WAN and Azure Firewall
 
-This repository contains an Azure Bicep template to simplify the deployment of a Hub and Spoke topology using Azure Virtual WAN secured with Azure Firewall in test or demo scenarios. This template is used by other scenarios as their networking infrastructure and they are built on top of it (i.e. [Fast Deploy: Azure Virtual Desktop](https://github.com/MS-ES-DEMO/avd-consumption-play)).
+This repository contains an Azure Bicep template to simplify the deployment of a Hub and Spoke topology using Azure Virtual WAN secured with Azure Firewall in test or demo scenarios. This template is used by other scenarios as their networking infrastructure and they are built on top of it (i.e. [Fast Deploy: Azure Virtual Desktop](https://github.com/MS-ES-DEMO/avd-consumption-fast-deploy)).
 
 The following diagram shows a detailed architecture of the logical and network topology of the resources created by this template. Relevant resources for the specific scenario coverd in this repository are deployed into the following resource groups:
 
 - **rg-hub**: resources associated with Azure vWAN.
 - **rg-security**: resources associated with Azure Firewall integrated with Azure vWAN.
-- **rg-montor**: a storage account and a Log Analytics Workspace to store the diagnostics information.
+- **rg-monitor**: a storage account and a Log Analytics Workspace to store the diagnostics information.
 - **rg-shared**: resoures associated with a spoke that hosts the common services used by other workloads. For example: Active Directory Domain Services and DNS.
 - **rg-spoke**: an example spoke to show the deployment of an application with consumption of a Private Endpoint.
 
@@ -37,7 +37,7 @@ As alternative, you can use [Azure Shell with PowerShell](https://ms.portal.azur
 After validating Bicep installation, you would need to configure the Azure subscription where the resources would be deployed. You need to make sure that you have at least enough quota for creating:
 
 - 1 vWAN Hub
-- 1 Azure Firewall Standard
+- 1 Azure Firewall Premium
 - 2 Standard_DS2_V2 Virtual Machines
 - 2 Storage Account
 - 1 Log Analytics Workspace
