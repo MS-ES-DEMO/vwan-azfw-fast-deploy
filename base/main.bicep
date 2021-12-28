@@ -43,6 +43,8 @@ param vmAdds object
 var vmAddsDnsName = vmAdds.name
 var vmAddsDnsSize = vmAdds.sku
 var addsDnsNicName  = vmAdds.nicName
+var addsDnsDataDiskName = vmAdds.dataDiskName
+var addsDnsDataDiskSize = vmAdds.dataDiskSize
 var vmAddsDnsAdminUsername = vmAdds.adminUsername
 var addsDnsExtensionName = vmAdds.extensionName
 var artifactsLocation = vmAdds.artifactsLocation
@@ -216,6 +218,8 @@ module sharedResources 'shared/sharedResources.bicep' = {
     snetsInfo: sharedSnetsInfo
     privateDnsZonesInfo: privateDnsZonesInfo 
     addsDnsNicName: addsDnsNicName
+    addsDnsDataDiskName: addsDnsDataDiskName
+    addsDnsDataDiskSize: addsDnsDataDiskSize
     diagnosticsStorageAccountName: diagnosticsStorageAccountName
     monitoringResourceGroupName: monitoringResourceGroupName
     logWorkspaceName: monitoringResources.outputs.logWorkspaceName

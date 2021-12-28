@@ -7,6 +7,8 @@ param tags object
 param vnetInfo object 
 param snetsInfo array
 param nicName string
+param dataDiskName string
+param dataDiskSize int
 param vmName string
 param vmSize string
 @secure()
@@ -33,10 +35,20 @@ module nicResources '../../../modules/Microsoft.Network/nic.bicep' = {
   }
 }
 
-module vmResources '../../../modules/Microsoft.Compute/vm.bicep' = {
+module dataDiskResources '../../../modules/Microsoft.Compute/disk.bicep' = {
+  name: 'dataDiskResources_Deploy'
+  params: {
+    tags: tags
+    name: dataDiskName
+    diskSize: dataDiskSize
+  }
+}
+
+module vmResources '../../../modules/Microsoft.Compute/vmAddsDns.bicep' = {
   name: 'vmResources_Deploy'
   dependsOn: [
     nicResources
+    dataDiskResources
   ]
   params: {
     tags: tags
@@ -45,6 +57,7 @@ module vmResources '../../../modules/Microsoft.Compute/vm.bicep' = {
     adminUsername: vmAdminUsername
     adminPassword: vmAdminPassword
     nicName: nicName
+    dataDiskName: dataDiskName
   }
 }
 

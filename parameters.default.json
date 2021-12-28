@@ -102,9 +102,11 @@
                 "name": "vm-adds",
                 "sku": "Standard_DS2_V2",
                 "nicName": "nic-adds",
+                "dataDiskName": "vm-adds-data-disk-01",
+                "dataDiskSize": 8,
                 "adminUsername": "azureAdmin",
                 "extensionName": "addsDnsExtension",
-                "artifactLocation": "https://extensionsavd.blob.core.windows.net/extensions/",
+                "artifactsLocation": "https://extensionsavd.blob.core.windows.net/extensions/",
                 "domainName": "mydomain.local"
             }
         },

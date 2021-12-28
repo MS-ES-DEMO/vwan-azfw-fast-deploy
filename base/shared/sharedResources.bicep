@@ -7,6 +7,8 @@ param snetsInfo array
 param privateDnsZonesInfo array
 
 param addsDnsNicName string
+param addsDnsDataDiskName string
+param addsDnsDataDiskSize int
 
 param vmAddsDnsName string
 param vmAddsDnsSize string
@@ -41,6 +43,8 @@ module addsDnsResources '../shared/addsdns/addsDnsResources.bicep' = {
     vnetInfo: vnetInfo 
     snetsInfo: snetsInfo  
     nicName: addsDnsNicName
+    dataDiskName: addsDnsDataDiskName
+    dataDiskSize: addsDnsDataDiskSize
     vmName: vmAddsDnsName
     vmSize: vmAddsDnsSize
     vmAdminUsername: vmAddsDnsAdminUsername
