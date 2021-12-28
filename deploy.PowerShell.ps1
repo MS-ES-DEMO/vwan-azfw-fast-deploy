@@ -1,7 +1,7 @@
 param (
   [Parameter(Mandatory = $true)]
-  [securestring]
-  $adminPassword,
+  [string]
+  $adminUsername,
   [string]
   $location = "westeurope",
   [string] 
@@ -13,6 +13,11 @@ param (
   )
 
 $deploymentName="$deploymentPrefix-$(New-Guid)"
-$adminPassword
 
+New-AzDeployment -Name $deploymentName `
+                -Location $location `
+                -TemplateFile $templateFile `
+                -TemplateParameterFile  $parameterFile `
+                -vmAddsDnsAdminUsername $adminUsername `
+                -Verbose
 
