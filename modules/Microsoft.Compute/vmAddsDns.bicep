@@ -3,7 +3,6 @@ param location string = resourceGroup().location
 param tags object
 param name string 
 param vmSize string
-@secure()
 param adminUsername string
 @secure()
 param adminPassword string

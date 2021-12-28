@@ -13,7 +13,10 @@ param addsDnsDataDiskSize int
 param vmAddsDnsName string
 param vmAddsDnsSize string
 param vmAddsDnsAdminUsername string
+@secure()
 param vmAddsDnsAdminPassword string
+@secure()
+param domainAdminPassword string
 param diagnosticsStorageAccountName string
 param logWorkspaceName string
 param monitoringResourceGroupName string
@@ -49,6 +52,7 @@ module addsDnsResources '../shared/addsdns/addsDnsResources.bicep' = {
     vmSize: vmAddsDnsSize
     vmAdminUsername: vmAddsDnsAdminUsername
     vmAdminPassword: vmAddsDnsAdminPassword
+    domainAdminPassword: domainAdminPassword
     diagnosticsStorageAccountName: diagnosticsStorageAccountName
     logWorkspaceName: logWorkspaceName
     monitoringResourceGroupName: monitoringResourceGroupName

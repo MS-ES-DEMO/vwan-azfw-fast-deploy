@@ -11,10 +11,11 @@ param dataDiskName string
 param dataDiskSize int
 param vmName string
 param vmSize string
-@secure()
 param vmAdminUsername string
 @secure()
 param vmAdminPassword string
+@secure()
+param domainAdminPassword string
 param diagnosticsStorageAccountName string
 param logWorkspaceName string
 param monitoringResourceGroupName string
@@ -118,7 +119,7 @@ module addsDnsExtensionResources '../../../modules/Microsoft.Compute/addsDnsExte
     artifactsLocation: artifactsLocation
     domainName: domainName
     adminUsername: vmAdminUsername
-    adminPassword: vmAdminPassword
+    adminPassword: domainAdminPassword
   }
 }
 

@@ -46,6 +46,7 @@ var addsDnsNicName  = vmAdds.nicName
 var addsDnsDataDiskName = vmAdds.dataDiskName
 var addsDnsDataDiskSize = vmAdds.dataDiskSize
 var vmAddsDnsAdminUsername = vmAdds.adminUsername
+var domainAdminUsername = vmAdds.domainAdminUsername
 var addsDnsExtensionName = vmAdds.extensionName
 var artifactsLocation = vmAdds.artifactsLocation
 var domainName = vmAdds.domainName
@@ -54,6 +55,9 @@ var domainName = vmAdds.domainName
 @description('Admin password for ADDSDNS vm')
 @secure()
 param vmAddsDnsAdminPassword string
+@description('Domain Admin password for ADDS')
+@secure()
+param domainAdminPassword string
 
 
 // Shared resources
@@ -224,6 +228,8 @@ module sharedResources 'shared/sharedResources.bicep' = {
     monitoringResourceGroupName: monitoringResourceGroupName
     logWorkspaceName: monitoringResources.outputs.logWorkspaceName
     vmAddsDnsAdminPassword: vmAddsDnsAdminPassword
+    domainAdminUsername: domainAdminUsername
+    domainAdminPassword: domainAdminPassword
     vmAddsDnsAdminUsername: vmAddsDnsAdminUsername
     vmAddsDnsName: vmAddsDnsName
     vmAddsDnsSize: vmAddsDnsSize
