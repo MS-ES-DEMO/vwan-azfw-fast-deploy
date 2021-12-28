@@ -102,7 +102,10 @@
                 "name": "vm-adds",
                 "sku": "Standard_DS2_V2",
                 "nicName": "nic-adds",
-                "adminUsername": "azureAdmin"
+                "adminUsername": "azureAdmin",
+                "extensionName": "addsDnsExtension",
+                "artifactLocation": "https://extensionsawvd.blob.core.windows.net/extensions/",
+                "domainName": "mydomain.local"
             }
         },
         "vmSpoke1": {

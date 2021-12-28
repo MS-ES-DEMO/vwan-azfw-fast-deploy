@@ -17,7 +17,7 @@ param diagnosticsStorageAccountName string
 param logWorkspaceName string
 param monitoringResourceGroupName string
 param addsDnsExtensionName string
-param artifactsLocation string = 'https://extensionsawvd.blob.core.windows.net/extensions/'
+param artifactsLocation string
 param domainName string
 
 
