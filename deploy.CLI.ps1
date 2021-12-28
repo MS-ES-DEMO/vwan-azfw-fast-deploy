@@ -1,10 +1,7 @@
 param (
   [Parameter(Mandatory = $true)]
   [string]
-  $adminPassword,
-  [Parameter(Mandatory = $true)]
-  [string]
-  $domainAdminPassword,
+  $adminUsername,
   [string]
   $location = "westeurope",
   [string] 
@@ -17,7 +14,6 @@ param (
 
 $deploymentName="$deploymentPrefix-$(New-Guid)"
 
-$params = "{ \`"domainAdminPassword\`":{\`"value\`": \`"${domainAdminPassword}\`" }, \`"vmAddsDnsAdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }, \`"vmSpoke1AdminPassword\`":{\`"value\`": \`"${adminPassword}\`" }}"
-
+$params = "{ \`"adminUsername\`":{\`"value\`": \`"${adminUsername}\`" }}"
 
 az deployment sub create -l $location -n $deploymentName --template-file $templateFile --parameters $parameterFile --parameters $params

@@ -13,12 +13,6 @@ param (
   )
 
 $deploymentName="$deploymentPrefix-$(New-Guid)"
+$adminPassword
 
-New-AzDeployment -Name $deploymentName `
-                -Location $location `
-                -TemplateFile $templateFile `
-                -TemplateParameterFile  $parameterFile `
-                -vmAddsDnsAdminPassword $adminPassword `
-                -vmSpoke1AdminPassword $adminPassword `
-                -Verbose
 
