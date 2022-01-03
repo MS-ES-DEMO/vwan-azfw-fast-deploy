@@ -15,7 +15,6 @@ resource vwan 'Microsoft.Network/virtualWans@2021-02-01' = {
   properties: {
     disableVpnEncryption: false
     allowBranchToBranchTraffic: false 
-    office365LocalBreakoutCategory: 'None'
     type: 'Standard'
   }
 }
