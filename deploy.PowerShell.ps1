@@ -1,7 +1,4 @@
 param (
-  [Parameter(Mandatory = $true)]
-  [string]
-  $adminUsername,
   [string]
   $location = "westeurope",
   [string] 
@@ -18,6 +15,5 @@ New-AzDeployment -Name $deploymentName `
                 -Location $location `
                 -TemplateFile $templateFile `
                 -TemplateParameterFile  $parameterFile `
-                -vmAddsDnsAdminUsername $adminUsername `
                 -Verbose
 

@@ -1,7 +1,4 @@
 param (
-  [Parameter(Mandatory = $true)]
-  [string]
-  $adminUsername,
   [string]
   $location = "westeurope",
   [string] 
@@ -14,6 +11,4 @@ param (
 
 $deploymentName="$deploymentPrefix-$(New-Guid)"
 
-$params = "{ \`"adminUsername\`":{\`"value\`": \`"${adminUsername}\`" }}"
-
-az deployment sub create -l $location -n $deploymentName --template-file $templateFile --parameters $parameterFile --parameters $params
+az deployment sub create -l $location -n $deploymentName --template-file $templateFile --parameters $parameterFile 
