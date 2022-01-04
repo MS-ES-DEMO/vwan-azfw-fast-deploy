@@ -43,6 +43,8 @@ After validating Bicep installation, you would need to configure the Azure subsc
 - 1 Log Analytics Workspace
 - 3 Private DNS Zones
 
+[Check resource usage against limits](https://docs.microsoft.com/en-us/azure/networking/check-usage-against-limits#azure-portal) Azure documentation article to understand how you can review your actual usage through Azure Portal.
+
 ## How to deploy
 
 1. Customize the parameters.default.json file to adapt their values to your specific environment. Some resources like storage accounts required a unique name across all Azure subscriptions. If you use the default name, the deployment may fail because another user has already deploy this template.
