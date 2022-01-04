@@ -82,3 +82,15 @@ After validating Bicep installation, you would need to configure the Azure subsc
 - *vmSpoke1.adminUsername*
   - "type": "string",
   - "description": "User name of the local admin configured for the virtual machine deployed on the application spoke"
+
+## Known Issues
+
+- **I'm not able to delete my vWAN and Azure Firewall resources. I get an error**
+
+This template deploys Azure Firewall and vWAN in different resource groups. In this configuration, if you try to delete the resource groups containing these resources an error is triggered. While this specific issue is fixed, the only way to clean everything is stopping the firewall with the following commands:
+
+$firewall = Get-AzFirewall -Name "azfw" -ResourceGroupName "rg-security"
+$firewall.Deallocate()
+$firewall | Set-AzFirewall
+
+After that, you would be able to delete the resources without any error.
