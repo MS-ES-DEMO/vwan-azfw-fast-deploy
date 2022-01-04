@@ -47,10 +47,13 @@ After validating Bicep installation, you would need to configure the Azure subsc
 
 ## How to deploy
 
-1. Customize the parameters.default.json file to adapt their values to your specific environment. Some resources like storage accounts required a unique name across all Azure subscriptions. If you use the default name, the deployment may fail because another user has already deploy this template.
-2. Execute deploy.PowerShell.ps1 or deploy.CLI.ps1 script based on the current command line Azure tools available in your computer.
-3. Wait around 30-40 minutes.
-4. Enjoy.
+1. Customize the parameters.default.json file to adapt the default values to your specific environment. Some resources like storage accounts required a unique name across all Azure subscriptions. If you use the default name, the deployment may fail because another user has already deploy this template. We recommend to change the following parameters:
+    - *monitoringOptions.diagnosticsStorageAccountName* to avoid name collision with an existing storage account.
+    - *privateEndpoints.spoke1StorageAccount.name* to avoid name collision with an existing storage account.
+    - *vmAdds.artifactsLocation* if you want to host in a different place the scripts required to deploy the Domain Controller. In the utils folder you can find the required zip file.
+2. Execute ./deploy.PowerShell.ps1 or ./deploy.CLI.ps1 script based on the current command line Azure tools available in your computer. If you use the PowerShell option, the verbose mode would allow you to see the status of the deployment in real time.
+    - If you receive an error about your Execution Policy, please change it using [Set-ExecutionPolicy -ExecutionPolicy RemoteSigned](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.2)
+3. Wait around 40-50 minutes. Creating the Domain Controller and deploying the vWAN Hub and Firewall takes time.
 
 ## Parameters
 
@@ -58,11 +61,11 @@ After validating Bicep installation, you would need to configure the Azure subsc
 
 - *location*
   - "type": "string",
-  - "description": "Allows to configure the Azure region where the resources should be deployed. Only tested at this time on North Europe and West Eurpope."
+  - "description": "Allows to configure the Azure region where the resources should be deployed. Only tested at this time on North Europe and West Europe."
 
 - *resourceGroupNames*
   - "type": "string",
-  - "description": "Allows to configure the specific resource group where the resources associated to that serice would be deployed. You can define the same resource group name for all resources in a test environment to simplify management and deletion after finishing with the evaluation."
+  - "description": "Allows to configure the specific resource group where the resources associated to that service would be deployed. You can define the same resource group name for all resources in a test environment to simplify management and deletion after finishing with the evaluation."
 
 - *deployLogWorkspace*
   - "type": "bool",
