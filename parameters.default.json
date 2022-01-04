@@ -27,7 +27,7 @@
             "value": {
                 "deployLogAnalyticsWorkspace": true,
                 "existingLogAnalyticsWorkspaceName": "",
-                "diagnosticsStorageAccountName": "sadiagnosticdatadev"
+                "diagnosticsStorageAccountName": "sadiagnosticdataagent"
             }
         },
         "sharedVnetInfo": {
@@ -121,7 +121,7 @@
         "privateEndpoints": {
             "value": {
                 "spoke1StorageAccount" : {
-                    "name" : "blobdevspoke1",
+                    "name" : "blobdemospoke1",
                     "privateEndpointName": "plink-blob-spoke1"
                 }
             }
