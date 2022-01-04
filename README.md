@@ -2,32 +2,32 @@
 
 This repository contains an Azure Bicep template to simplify the deployment of a Hub and Spoke topology using Azure Virtual WAN secured with Azure Firewall in test or demo scenarios. This template is used by other scenarios as their networking infrastructure and they are built on top of it (i.e. [Fast Deploy: Azure Virtual Desktop](https://github.com/MS-ES-DEMO/avd-consumption-fast-deploy)).
 
-The following diagram shows a detailed architecture of the logical and network topology of the resources created by this template. Relevant resources for the specific scenario coverd in this repository are deployed into the following resource groups:
+The following diagram shows a detailed architecture of the logical and network topology of the resources created by this template. Relevant resources for the specific scenario covered in this repository are deployed into the following resource groups:
 
 - **rg-hub**: resources associated with Azure vWAN.
 - **rg-security**: resources associated with Azure Firewall integrated with Azure vWAN.
 - **rg-monitor**: a storage account and a Log Analytics Workspace to store the diagnostics information.
-- **rg-shared**: resoures associated with a spoke that hosts the common services used by other workloads. For example: Active Directory Domain Services and DNS.
+- **rg-shared**: resources associated with a spoke that hosts the common services used by other workloads. For example: Active Directory Domain Services and DNS.
 - **rg-spoke**: an example spoke to show the deployment of an application with consumption of a Private Endpoint.
 
 The following resource groups are associated with other scenarios using this template as a reference for their networking requirements:
 
 - **rg-avd**: network configuration for provisioning Azure Virtual Desktop with different usage scenarios.
 
-![Logial architecture](/doc/images/logical-network-diagram.png )
+![Logical architecture](/doc/images/logical-network-diagram.png )
 
 ## Repository structure
 
 This repository is organized in the following folders:
 
-- **base**: folder containing Bicep file that deploy the evnironment.
+- **base**: folder containing Bicep file that deploy the environment.
 - **doc**: contains documents and images related to this scenario.
 - **modules**: Bicep modules that integrates the different resources used by the base scripts.
 - **utils**: extra files required to deploy this scenario.
 
 ## Pre-requisites
 
-Bicep is the language used for defining declaratively the Azure resources required in this template. You would need to configure your development environment with Bicep support to succesffully deploy this scenario.
+Bicep is the language used for defining declaratively the Azure resources required in this template. You would need to configure your development environment with Bicep support to successfully deploy this scenario.
 
 - [Installing Bicep with Azure CLI](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-cli)
 - [Installing Bicep with Azure PowerShell](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
