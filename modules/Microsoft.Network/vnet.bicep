@@ -25,7 +25,6 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
     dhcpOptions: {
       dnsServers: (deployCustomDns) ? [
         dnsNic.properties.ipConfigurations[0].properties.privateIPAddress
-        '168.63.129.16'
       ] : json('null')
     }
     subnets: [ for snetInfo in snetsInfo : {
