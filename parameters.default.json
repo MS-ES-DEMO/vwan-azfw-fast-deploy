@@ -38,6 +38,10 @@
                     {
                         "name": "snet-addns",
                         "range": "10.0.1.0/26"
+                    },
+                    {
+                        "name": "AzureBastionSubnet",
+                        "range": "10.0.1.64/26"
                     }
                 ]
             }
@@ -106,7 +110,7 @@
                 "dataDiskSize": 8,
                 "adminUsername": "azureAdmin",
                 "extensionName": "addsDnsExtension",
-                "artifactsLocation": "https://extensionsavd.blob.core.windows.net/extensions/",
+                "artifactsLocation": "https://saresourcesdeployjosef.blob.core.windows.net/resources/",
                 "domainName": "mydomain.local"
             }
         },
@@ -120,8 +124,8 @@
         },
         "privateEndpoints": {
             "value": {
-                "spoke1StorageAccount" : {
-                    "name" : "blobdemospoke1",
+                "spoke1StorageAccount": {
+                    "name": "blobdemospoke1",
                     "privateEndpointName": "plink-blob-spoke1"
                 }
             }
@@ -232,6 +236,11 @@
                     "priority": "",
                     "ruleSet": []
                 }
+            }
+        },
+        "bastionConfiguration": {
+            "value": {
+                "name": "bastion-shared"
             }
         }
     }

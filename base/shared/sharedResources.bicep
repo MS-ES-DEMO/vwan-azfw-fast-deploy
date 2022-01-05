@@ -25,6 +25,8 @@ param addsDnsExtensionName string
 param artifactsLocation string
 param domainName string
 
+param bastionName string
+
 module vnetResources '../../modules/Microsoft.Network/vnet.nodns.bicep' = {
   name: 'vnetResources_Deploy'
   params: {
@@ -90,3 +92,17 @@ module vnetLinks '../../modules/Microsoft.Network/vnetLink.bicep' = [ for (priva
   }
 }]
 
+module bastion '../../modules/Microsoft.Network/bastion.bicep' = {
+  name: 'bastionResources_Deploy'
+  dependsOn: [
+    vnetResources
+  ]
+  params: {
+    name: bastionName
+    location: location
+    tags: tags
+    vnetName: vnetInfo.name
+    vnetResourceGroupName: resourceGroup().name
+  }
+  
+}
