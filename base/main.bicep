@@ -33,7 +33,9 @@ var diagnosticsStorageAccountName = monitoringOptions.diagnosticsStorageAccountN
 
 
 // Security resources
-
+@description('Default password for every vm')
+@secure()
+param adminPassword string 
 
 // Active Directory Domain Services resources
 
@@ -53,10 +55,10 @@ var domainName = vmAdds.domainName
 
 @description('Admin password for ADDSDNS vm')
 @secure()
-param vmAddsDnsAdminPassword string
+param vmAddsDnsAdminPassword string = adminPassword
 @description('Domain Admin password for ADDS')
 @secure()
-param domainAdminPassword string
+param domainAdminPassword string = adminPassword
 
 
 // Shared resources
@@ -104,7 +106,7 @@ var vmSpoke1AdminUsername = vmSpoke1.adminUsername
 
 @description('Admin password for Spoke1 vm')
 @secure()
-param vmSpoke1AdminPassword string
+param vmSpoke1AdminPassword string = adminPassword
 
 
 param privateEndpoints object
@@ -172,7 +174,11 @@ var avdSnetsInfo = avdVnetInfo.subnets
 
 var deployCustomDnsOnAvdVnet = avdVnetInfo.deployCustomDns
 
+// Bastion resources
+@description('Name of Azure Bastion instance')
+param bastionConfiguration object
 
+var bastionName = bastionConfiguration.name
 /* 
   Monitoring resources deployment 
 */
@@ -234,6 +240,7 @@ module sharedResources 'shared/sharedResources.bicep' = {
     addsDnsExtensionName: addsDnsExtensionName
     artifactsLocation: artifactsLocation
     domainName: domainName
+    bastionName: bastionName
   }
 }
 
