@@ -51,7 +51,7 @@ After validating Bicep installation, you would need to configure the Azure subsc
     - *monitoringOptions.diagnosticsStorageAccountName* to avoid name collision with an existing storage account.
     - *privateEndpoints.spoke1StorageAccount.name* to avoid name collision with an existing storage account.
     - *vmAdds.artifactsLocation* if you want to host in a different place the scripts required to deploy the Domain Controller. In the utils folder you can find the required zip file.
-2. Execute ./deploy.PowerShell.ps1 or ./deploy.CLI.ps1 script based on the current command line Azure tools available in your computer. If you use the PowerShell option, the verbose mode would allow you to see the status of the deployment in real time.
+2. Execute `./deploy.PowerShell.ps1` or `./deploy.CLI.ps1` script based on the current command line Azure tools available in your computer. If you use the PowerShell option, the verbose mode would allow you to see the status of the deployment in real time.
     - If you receive an error about your Execution Policy, please change it using [Set-ExecutionPolicy -ExecutionPolicy RemoteSigned](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.2)
 3. Wait around 40-50 minutes. Creating the Domain Controller and deploying the vWAN Hub and Firewall takes time.
 
