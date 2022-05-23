@@ -13,7 +13,7 @@ param disableCopyPaste bool = true
 param dnsName string = name
 param enableFileCopy bool = true
 param enableIpConnect bool = true
-param enableShareableLink bool = true
+//param enableShareableLink bool = true TODO: Provisioning state failed message...
 param enableTunneling bool = true
 
 resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' existing = {
@@ -58,7 +58,7 @@ resource bastion 'Microsoft.Network/bastionHosts@2021-05-01' = {
     dnsName: dnsName
     enableFileCopy: enableFileCopy
     enableIpConnect: enableIpConnect
-    enableShareableLink: enableShareableLink
+    //enableShareableLink: enableShareableLink TODO: Provisioning state failed message... 
     enableTunneling: enableTunneling
     ipConfigurations: [
       {
